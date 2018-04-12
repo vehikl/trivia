@@ -9,5 +9,13 @@
             "email": "colin@thedecarlos.ca"
         }
     ],
+    "autoload": {
+        "files": [
+            "src/functions.php"
+        ],
+        "classmap": [
+            "src/"
+        ]
+    },
     "require": {}
 }
