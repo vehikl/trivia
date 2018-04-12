@@ -1,0 +1,13 @@
+{
+    "name": "vehikl/trivia",
+    "require-dev": {
+        "phpunit/phpunit": "^7.1"
+    },
+    "authors": [
+        {
+            "name": "Colin DeCarlo",
+            "email": "colin@thedecarlos.ca"
+        }
+    ],
+    "require": {}
+}
