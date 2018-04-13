@@ -62,17 +62,17 @@ class Game
 
     public function roll($roll)
     {
-        echoln($this->players[$this->getCurrentPlayerId()] . " is the current player");
+        echoln($this->getCurrentPlayerName() . " is the current player");
         echoln("They have rolled a " . $roll);
 
         if ($this->inPenaltyBox[$this->getCurrentPlayerId()]) {
             if ($roll % 2 != 0) {
                 $this->isGettingOutOfPenaltyBox = true;
 
-                echoln($this->players[$this->getCurrentPlayerId()] . " is getting out of the penalty box");
+                echoln($this->getCurrentPlayerName() . " is getting out of the penalty box");
                 $this->movePlayer($roll);
             } else {
-                echoln($this->players[$this->getCurrentPlayerId()] . " is not getting out of the penalty box");
+                echoln($this->getCurrentPlayerName() . " is not getting out of the penalty box");
                 $this->isGettingOutOfPenaltyBox = false;
             }
         } else {
@@ -87,7 +87,7 @@ class Game
             $this->places[$this->getCurrentPlayerId()] = $this->places[$this->getCurrentPlayerId()] - self::TOTAL_PLACES;
         }
 
-        echoln($this->players[$this->getCurrentPlayerId()]
+        echoln($this->getCurrentPlayerName()
             . "'s new location is "
             . $this->places[$this->getCurrentPlayerId()]);
         echoln("The category is " . $this->currentCategory());
@@ -174,7 +174,7 @@ class Game
     private function givePlayerGoldCoin()
     {
         $this->purses[$this->getCurrentPlayerId()]++;
-        echoln($this->players[$this->getCurrentPlayerId()]
+        echoln($this->getCurrentPlayerName()
             . " now has "
             . $this->purses[$this->getCurrentPlayerId()]
             . " Gold Coins.");
@@ -188,7 +188,7 @@ class Game
     public function wrongAnswer()
     {
         echoln("Question was incorrectly answered");
-        echoln($this->players[$this->getCurrentPlayerId()] . " was sent to the penalty box");
+        echoln($this->getCurrentPlayerName() . " was sent to the penalty box");
         $this->inPenaltyBox[$this->getCurrentPlayerId()] = true;
 
         $this->passTheDice();
@@ -212,5 +212,10 @@ class Game
     private function getCurrentPlayerId()
     {
         return $this->currentPlayer;
+    }
+
+    private function getCurrentPlayerName()
+    {
+        return $this->players[$this->getCurrentPlayerId()];
     }
 }
