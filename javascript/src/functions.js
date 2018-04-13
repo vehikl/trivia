@@ -1,5 +1,13 @@
 const Game = require('./game.js');
 
+function doRandomRollNumber() {
+  return Math.floor(Math.random()*6) + 1;
+}
+
+function wouldAnswerIncorrectly() {
+  return Math.floor(Math.random()*10) == 7;
+}
+
 function play(seed) {
 
     if (seed != undefined) {
@@ -16,17 +24,22 @@ function play(seed) {
 
     do{
 
-        game.roll(Math.floor(Math.random()*6) + 1);
+        game.roll(doRandomRollNumber());
 
-        if(Math.floor(Math.random()*10) == 7){
+        if(wouldAnswerIncorrectly()){
             notAWinner = game.wrongAnswer();
         }else{
             notAWinner = game.wasCorrectlyAnswered();
         }
 
     }while(notAWinner);
+
+  return game;
 }
 
 module.exports = {
-    play: play
+  play: play,
+  doRandomRollNumber: doRandomRollNumber,
+  wouldAnswerIncorrectly: wouldAnswerIncorrectly,
+
 }
