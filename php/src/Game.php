@@ -17,6 +17,9 @@ class Game
 
     const QUESTIONS_PER_CATEGORY = 50;
 
+    const TOTAL_PLACES = 12;
+    const LAST_PLACE = 11;
+
     public function __construct()
     {
 
@@ -71,8 +74,8 @@ class Game
 
                 echoln($this->players[$this->currentPlayer] . " is getting out of the penalty box");
                 $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
-                if ($this->places[$this->currentPlayer] > 11) {
-                    $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - 12;
+                if ($this->places[$this->currentPlayer] > self::LAST_PLACE) {
+                    $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - self::TOTAL_PLACES;
                 }
 
                 echoln($this->players[$this->currentPlayer]
@@ -86,8 +89,8 @@ class Game
             }
         } else {
             $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
-            if ($this->places[$this->currentPlayer] > 11) {
-                $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - 12;
+            if ($this->places[$this->currentPlayer] > self::LAST_PLACE) {
+                $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - self::TOTAL_PLACES;
             }
 
             echoln($this->players[$this->currentPlayer]
