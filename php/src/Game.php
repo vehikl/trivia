@@ -176,7 +176,7 @@ class Game
         $this->purses[$this->getCurrentPlayerId()]++;
         echoln($this->getCurrentPlayerName()
             . " now has "
-            . $this->purses[$this->getCurrentPlayerId()]
+            . $this->getCurrentPlayerCoins()
             . " Gold Coins.");
 
         $winner = $this->didPlayerWin();
@@ -206,7 +206,7 @@ class Game
 
     private function didPlayerWin()
     {
-        return !($this->purses[$this->getCurrentPlayerId()] == self::GOLD_COINS_TO_WIN);
+        return !($this->getCurrentPlayerCoins() == self::GOLD_COINS_TO_WIN);
     }
 
     private function getCurrentPlayerId()
@@ -217,5 +217,10 @@ class Game
     private function getCurrentPlayerName()
     {
         return $this->players[$this->getCurrentPlayerId()];
+    }
+
+    private function getCurrentPlayerCoins()
+    {
+        return $this->purses[$this->getCurrentPlayerId()];
     }
 }
