@@ -196,21 +196,24 @@ class Game
 
     public function generateQuestions($numberOfQuestions = 50)
     {
-        for ($i = 0; $i < $numberOfQuestions; $i++) {
-            array_push($this->popQuestions, $this->createQuestion("Pop", $i));
-            array_push($this->scienceQuestions, $this->createQuestion("Science", $i));
-            array_push($this->sportsQuestions, $this->createQuestion("Sports", $i));
-            array_push($this->rockQuestions, $this->createQuestion("Rock", $i));
+        foreach (['Pop', 'Science', 'Sports', 'Rock'] as $category) {
+            $tmp          = strtolower($category) . 'Questions';
+            $this->{$tmp} = $this->generateCategoryQuestions($category, $numberOfQuestions);
         }
     }
 
-    /**
-     * @param $category
-     * @param $index
-     *
-     * @return string
-     */
-    private function createQuestion($category, $index) {
+    public function generateCategoryQuestions($category, $numberOfQuestions = 50)
+    {
+        $result = [];
+        for ($i = 0; $i < $numberOfQuestions; $i++) {
+            $result[] = $this->createQuestion($category, $i);
+        }
+
+        return $result;
+    }
+
+    private function createQuestion($category, $index)
+    {
         return $category . " Question " . $index;
     }
 }
