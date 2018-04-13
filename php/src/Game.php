@@ -15,6 +15,8 @@ class Game
     public $currentPlayer = 0;
     public $isGettingOutOfPenaltyBox;
 
+    const QUESTIONS_PER_CATEGORY = 50;
+
     public function __construct()
     {
 
@@ -28,7 +30,7 @@ class Game
         $this->sportsQuestions = array();
         $this->rockQuestions = array();
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < self::QUESTIONS_PER_CATEGORY; $i++) {
             array_push($this->popQuestions, "Pop Question " . $i);
             array_push($this->scienceQuestions, ("Science Question " . $i));
             array_push($this->sportsQuestions, ("Sports Question " . $i));
