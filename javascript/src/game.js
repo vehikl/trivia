@@ -113,34 +113,16 @@ const Game = function () {
       if(isGettingOutOfPenaltyBox){
         console.log('Answer was correct!!!!');
         purses[currentPlayer] += 1;
-        console.log(players[currentPlayer] + " now has " +
-                    purses[currentPlayer]  + " Gold Coins.");
-
-        var winner = didPlayerWin();
-        this.setNextPlayer();
-
-        return winner;
-      }else{
-        this.setNextPlayer();
-        return true;
+        this.announceScore();
       }
-
-
-
     }else{
-
       console.log("Answer was correct!!!!");
-
       purses[currentPlayer] += 1;
-      console.log(players[currentPlayer] + " now has " +
-                  purses[currentPlayer]  + " Gold Coins.");
-
-      var winner = didPlayerWin();
-
-
-      this.setNextPlayer();
-      return winner;
+      this.announceScore();
     }
+    var winner = didPlayerWin();
+    this.setNextPlayer();
+    return winner;
   };
 
   this.setNextPlayer = function(){
