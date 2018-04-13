@@ -156,15 +156,12 @@ class Game
 
     public function wasCorrectlyAnswered()
     {
-        if ($this->getCurrentPlayerIsInPenaltyBox()) {
-            if ($this->getCurrentPlayerIsGettingOutOfPenaltyBox()) {
-                echoln("Answer was correct!!!!");
-                return $this->givePlayerGoldCoin();
-            } else {
-                $this->passTheDice();
-
-                return true;
-            }
+        if ($this->getCurrentPlayerIsInPenaltyBox() && $this->getCurrentPlayerIsGettingOutOfPenaltyBox()) {
+            echoln("Answer was correct!!!!");
+            return $this->givePlayerGoldCoin();
+        } elseif ($this->getCurrentPlayerIsInPenaltyBox()) {
+            $this->passTheDice();
+            return true;
         } else {
             echoln("Answer was corrent!!!!");
             return $this->givePlayerGoldCoin();
