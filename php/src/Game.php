@@ -84,9 +84,7 @@ class Game
             $this->setCurrentPlayerSpace($this->getCurrentPlayerSpace() - self::TOTAL_PLACES);
         }
 
-        echoln($this->getCurrentPlayerName()
-            . "'s new location is "
-            . $this->getCurrentPlayerSpace());
+        echoln($this->getCurrentPlayerName() . "'s new location is " . $this->getCurrentPlayerSpace());
         echoln("The category is " . $this->currentCategory());
         $this->askQuestion();
     }
