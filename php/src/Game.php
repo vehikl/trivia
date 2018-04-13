@@ -38,10 +38,8 @@ class Game
     public function add($playerName)
     {
         $this->players[] = new Player($playerName);
-
         echoln("{$playerName} was added");
         echoln("They are player number {$this->howManyPlayers()}");
-        return true;
     }
 
     private function howManyPlayers()
