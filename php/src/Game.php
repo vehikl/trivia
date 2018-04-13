@@ -81,14 +81,13 @@ class Game
 
     function askQuestion()
     {
-        if ($this->currentCategory() == "Pop")
-            echoln(array_shift($this->popQuestions));
-        if ($this->currentCategory() == "Science")
-            echoln(array_shift($this->scienceQuestions));
-        if ($this->currentCategory() == "Sports")
-            echoln(array_shift($this->sportsQuestions));
-        if ($this->currentCategory() == "Rock")
-            echoln(array_shift($this->rockQuestions));
+        $var = strtolower($this->currentCategory()) . "Questions";
+
+        if (! isset($this->$var)) {
+            return null;
+        }
+
+        echoln(array_shift($this->{$var}));
     }
 
 
@@ -148,7 +147,6 @@ class Game
         if ($this->places[$this->currentPlayer] > self::MAX_PLACES - 1) {
             $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - self::MAX_PLACES;
         }
-
         echoln($this->players[$this->currentPlayer] . "'s new location is " . $this->places[$this->currentPlayer]);
         echoln("The category is " . $this->currentCategory());
         $this->askQuestion();
@@ -160,14 +158,12 @@ class Game
     private function giveCoins()
     {
         $this->purses[$this->currentPlayer]++;
-        echoln($this->players[$this->currentPlayer]
-            . " now has "
-            . $this->purses[$this->currentPlayer]
-            . " Gold Coins.");
-
+        echoln($this->players[$this->currentPlayer] . " now has " . $this->purses[$this->currentPlayer] . " Gold Coins.");
         $winner = $this->didPlayerWin();
         $this->currentPlayer++;
-        if ($this->currentPlayer == count($this->players)) $this->currentPlayer = 0;
+        if ($this->currentPlayer == count($this->players)) {
+            $this->currentPlayer = 0;
+        }
         return $winner;
     }
 
