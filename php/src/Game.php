@@ -28,17 +28,8 @@ class Game
         $this->sportsQuestions  = [];
         $this->rockQuestions    = [];
 
-        for ($i = 0; $i < 50; $i++) {
-            array_push($this->popQuestions, "Pop Question " . $i);
-            array_push($this->scienceQuestions, ("Science Question " . $i));
-            array_push($this->sportsQuestions, ("Sports Question " . $i));
-            array_push($this->rockQuestions, $this->createRockQuestion($i));
-        }
-    }
 
-    function createRockQuestion($index)
-    {
-        return "Rock Question " . $index;
+        $this->generateQuestions();
     }
 
     function isPlayable()
@@ -201,5 +192,25 @@ class Game
     function didPlayerWin()
     {
         return !($this->purses[$this->currentPlayer] == 6);
+    }
+
+    public function generateQuestions()
+    {
+        for ($i = 0; $i < 50; $i++) {
+            array_push($this->popQuestions, $this->createQuestion("Pop", $i));
+            array_push($this->scienceQuestions, $this->createQuestion("Science", $i));
+            array_push($this->sportsQuestions, $this->createQuestion("Sports", $i));
+            array_push($this->rockQuestions, $this->createQuestion("Rock", $i));
+        }
+    }
+
+    /**
+     * @param $category
+     * @param $index
+     *
+     * @return string
+     */
+    private function createQuestion($category, $index) {
+        return $category . " Question " . $index;
     }
 }
