@@ -194,9 +194,9 @@ class Game
         return !($this->purses[$this->currentPlayer] == 6);
     }
 
-    public function generateQuestions()
+    public function generateQuestions($numberOfQuestions = 50)
     {
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < $numberOfQuestions; $i++) {
             array_push($this->popQuestions, $this->createQuestion("Pop", $i));
             array_push($this->scienceQuestions, $this->createQuestion("Science", $i));
             array_push($this->sportsQuestions, $this->createQuestion("Sports", $i));
