@@ -1,4 +1,6 @@
 const Game = function () {
+  var that = this
+
   var players          = new Array();
   var places           = new Array(6);
   var purses           = new Array(6);
@@ -16,37 +18,26 @@ const Game = function () {
     return !(purses[currentPlayer] == 6)
   };
 
+  var map = {
+    0: 'Pop',
+    4: 'Pop',
+    8: 'Pop',
+    1: 'Science',
+    5: 'Science',
+    9: 'Science',
+    2: 'Sports',
+    6: 'Sports',
+    10: 'Sports',
+  }
   var currentCategory = function(){
-    if(places[currentPlayer] == 0)
-      return 'Pop';
-    if(places[currentPlayer] == 4)
-      return 'Pop';
-    if(places[currentPlayer] == 8)
-      return 'Pop';
-    if(places[currentPlayer] == 1)
-      return 'Science';
-    if(places[currentPlayer] == 5)
-      return 'Science';
-    if(places[currentPlayer] == 9)
-      return 'Science';
-    if(places[currentPlayer] == 2)
-      return 'Sports';
-    if(places[currentPlayer] == 6)
-      return 'Sports';
-    if(places[currentPlayer] == 10)
-      return 'Sports';
-    return 'Rock';
-  };
-
-  this.createRockQuestion = function(index){
-    return "Rock Question "+index;
+    return map.hasOwnProperty(places[currentPlayer]) ? map[places[currentPlayer]] : 'Rock';
   };
 
   for(var i = 0; i < 50; i++){
     popQuestions.push("Pop Question "+i);
     scienceQuestions.push("Science Question "+i);
     sportsQuestions.push("Sports Question "+i);
-    rockQuestions.push(this.createRockQuestion(i));
+    rockQuestions.push("Rock Question " + i);
   };
 
   this.isPlayable = function(howManyPlayers){
@@ -69,6 +60,9 @@ const Game = function () {
     return players.length;
   };
 
+  this.getCurrentPlayer = function() {
+    return players[currentPlayer]
+  }
 
   var askQuestion = function(){
     if(currentCategory() == 'Pop')
@@ -115,57 +109,43 @@ const Game = function () {
     }
   };
 
-  this.wasCorrectlyAnswered = function(){
-    if(inPenaltyBox[currentPlayer]){
-      if(isGettingOutOfPenaltyBox){
-        console.log('Answer was correct!!!!');
-        purses[currentPlayer] += 1;
-        console.log(players[currentPlayer] + " now has " +
-                    purses[currentPlayer]  + " Gold Coins.");
-
-        var winner = didPlayerWin();
-        currentPlayer += 1;
-        if(currentPlayer == players.length)
-          currentPlayer = 0;
-
-        return winner;
-      }else{
-        currentPlayer += 1;
-        if(currentPlayer == players.length)
-          currentPlayer = 0;
-        return true;
-      }
-
-
-
-    }else{
-
-      console.log("Answer was correct!!!!");
-
-      purses[currentPlayer] += 1;
-      console.log(players[currentPlayer] + " now has " +
-                  purses[currentPlayer]  + " Gold Coins.");
-
-      var winner = didPlayerWin();
-
-      currentPlayer += 1;
-      if(currentPlayer == players.length)
-        currentPlayer = 0;
-
-      return winner;
+  this.wasCorrectlyAnswered = function() {
+    if (that.isNotEligibleToAnswer()) {
+      that.changeTurn();
+      return true;
     }
+
+    return that.collectAndCheck();
   };
 
-  this.wrongAnswer = function(){
-		console.log('Question was incorrectly answered');
-		console.log(players[currentPlayer] + " was sent to the penalty box");
-		inPenaltyBox[currentPlayer] = true;
+  this.putPlayerInPenaltyBox = function () {
+    inPenaltyBox[currentPlayer] = true;
+  }
 
-    currentPlayer += 1;
-    if(currentPlayer == players.length)
-      currentPlayer = 0;
-		return true;
-  };
+  this.changeTurn = function() {
+    currentPlayer = currentPlayer == players.length - 1 ? 0 : currentPlayer + 1
+  }
+
+  this.isNotEligibleToAnswer = function() {
+    return inPenaltyBox[currentPlayer] && !isGettingOutOfPenaltyBox;
+  }
+
+  this.givePlayerCoin = function() {
+    ++purses[currentPlayer];
+  }
+
+  this.collectAndCheck = function () {
+    console.log('Answer was correct!!!!');
+    this.givePlayerCoin()
+    console.log(players[currentPlayer] + " now has " + purses[currentPlayer] + " Gold Coins.");
+    var winner = didPlayerWin();
+    this.changeTurn()
+    return winner;
+  }
+
+  this.inPenaltyBox = function() {
+
+  }
 };
 
 module.exports = Game
