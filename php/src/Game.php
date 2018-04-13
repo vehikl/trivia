@@ -13,6 +13,7 @@ class Game
     private $currentPlayer = 0;
     private $isGettingOutOfPenaltyBox;
     const MAX_PLACES = 12;
+    const WINNING_COIN_COUNT = 6;
 
     function __construct()
     {
@@ -105,7 +106,7 @@ class Game
         return "Rock";
     }
 
-    function wasCorrectlyAnswered()
+    function correctAnswer()
     {
         if ($this->inPenaltyBox[$this->currentPlayer]) {
             if ($this->isGettingOutOfPenaltyBox) {
@@ -133,7 +134,7 @@ class Game
 
     function didPlayerWin()
     {
-        return !($this->purses[$this->currentPlayer] == 6);
+        return !($this->purses[$this->currentPlayer] == self::WINNING_COIN_COUNT);
     }
 
     /**

@@ -22,15 +22,13 @@ function playGame($seed, $outputFile)
     $aGame->add("Sue");
 
     do {
-
         $aGame->roll(rand(0, 5) + 1);
 
         if (rand(0, 9) == 7) {
             $notAWinner = $aGame->wrongAnswer();
         } else {
-            $notAWinner = $aGame->wasCorrectlyAnswered();
+            $notAWinner = $aGame->correctAnswer();
         }
-
     } while ($notAWinner);
 
     ob_end_flush();
