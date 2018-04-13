@@ -82,14 +82,14 @@ class Game
 
     private function movePlayer($roll)
     {
-        $this->places[$this->getCurrentPlayerId()] = $this->places[$this->getCurrentPlayerId()] + $roll;
-        if ($this->places[$this->getCurrentPlayerId()] > self::LAST_PLACE) {
-            $this->places[$this->getCurrentPlayerId()] = $this->places[$this->getCurrentPlayerId()] - self::TOTAL_PLACES;
+        $this->setCurrentPlayerSpace($this->getCurrentPlayerSpace() + $roll);
+        if ($this->getCurrentPlayerSpace() > self::LAST_PLACE) {
+            $this->setCurrentPlayerSpace($this->getCurrentPlayerSpace() - self::TOTAL_PLACES);
         }
 
         echoln($this->getCurrentPlayerName()
             . "'s new location is "
-            . $this->places[$this->getCurrentPlayerId()]);
+            . $this->getCurrentPlayerSpace());
         echoln("The category is " . $this->currentCategory());
         $this->askQuestion();
     }
@@ -115,39 +115,39 @@ class Game
 
     private function currentCategory()
     {
-        if ($this->places[$this->getCurrentPlayerId()] == 0) {
+        if ($this->getCurrentPlayerSpace() == 0) {
             return "Pop";
         }
 
-        if ($this->places[$this->getCurrentPlayerId()] == 4) {
+        if ($this->getCurrentPlayerSpace() == 4) {
             return "Pop";
         }
 
-        if ($this->places[$this->getCurrentPlayerId()] == 8) {
+        if ($this->getCurrentPlayerSpace() == 8) {
             return "Pop";
         }
 
-        if ($this->places[$this->getCurrentPlayerId()] == 1) {
+        if ($this->getCurrentPlayerSpace() == 1) {
             return "Science";
         }
 
-        if ($this->places[$this->getCurrentPlayerId()] == 5) {
+        if ($this->getCurrentPlayerSpace() == 5) {
             return "Science";
         }
 
-        if ($this->places[$this->getCurrentPlayerId()] == 9) {
+        if ($this->getCurrentPlayerSpace() == 9) {
             return "Science";
         }
 
-        if ($this->places[$this->getCurrentPlayerId()] == 2) {
+        if ($this->getCurrentPlayerSpace() == 2) {
             return "Sports";
         }
 
-        if ($this->places[$this->getCurrentPlayerId()] == 6) {
+        if ($this->getCurrentPlayerSpace() == 6) {
             return "Sports";
         }
 
-        if ($this->places[$this->getCurrentPlayerId()] == 10) {
+        if ($this->getCurrentPlayerSpace() == 10) {
             return "Sports";
         }
 
@@ -174,10 +174,7 @@ class Game
     private function givePlayerGoldCoin()
     {
         $this->purses[$this->getCurrentPlayerId()]++;
-        echoln($this->getCurrentPlayerName()
-            . " now has "
-            . $this->getCurrentPlayerCoins()
-            . " Gold Coins.");
+        echoln($this->getCurrentPlayerName() . " now has " . $this->getCurrentPlayerCoins() . " Gold Coins.");
 
         $winner = $this->didPlayerWin();
         $this->passTheDice();
@@ -222,5 +219,15 @@ class Game
     private function getCurrentPlayerCoins()
     {
         return $this->purses[$this->getCurrentPlayerId()];
+    }
+
+    private function setCurrentPlayerSpace($value)
+    {
+        $this->places[$this->getCurrentPlayerId()] = $value;
+    }
+
+    private function getCurrentPlayerSpace()
+    {
+        return $this->places[$this->getCurrentPlayerId()];
     }
 }
