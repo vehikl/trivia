@@ -173,7 +173,7 @@ class Game
 
     private function givePlayerGoldCoin()
     {
-        $this->purses[$this->getCurrentPlayerId()]++;
+        $this->addCoinToCurrentPlayer();
         echoln($this->getCurrentPlayerName() . " now has " . $this->getCurrentPlayerCoins() . " Gold Coins.");
 
         $winner = $this->didPlayerWin();
@@ -219,6 +219,11 @@ class Game
     private function getCurrentPlayerCoins()
     {
         return $this->purses[$this->getCurrentPlayerId()];
+    }
+
+    private function addCoinToCurrentPlayer()
+    {
+        $this->purses[$this->getCurrentPlayerId()]++;
     }
 
     private function setCurrentPlayerSpace($value)
