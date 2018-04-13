@@ -65,7 +65,7 @@ class Game
         echoln($this->getCurrentPlayerName() . " is the current player");
         echoln("They have rolled a " . $roll);
 
-        if ($this->inPenaltyBox[$this->getCurrentPlayerId()]) {
+        if ($this->getCurrentPlayerIsInPenaltyBox()) {
             if ($roll % 2 != 0) {
                 $this->isGettingOutOfPenaltyBox = true;
 
@@ -156,7 +156,7 @@ class Game
 
     public function wasCorrectlyAnswered()
     {
-        if ($this->inPenaltyBox[$this->getCurrentPlayerId()]) {
+        if ($this->getCurrentPlayerIsInPenaltyBox()) {
             if ($this->isGettingOutOfPenaltyBox) {
                 echoln("Answer was correct!!!!");
                 return $this->givePlayerGoldCoin();
@@ -186,7 +186,7 @@ class Game
     {
         echoln("Question was incorrectly answered");
         echoln($this->getCurrentPlayerName() . " was sent to the penalty box");
-        $this->inPenaltyBox[$this->getCurrentPlayerId()] = true;
+        $this->setCurrentPlayerIsInPenaltyBox(true);
 
         $this->passTheDice();
 
@@ -229,5 +229,15 @@ class Game
     private function getCurrentPlayerSpace()
     {
         return $this->places[$this->getCurrentPlayerId()];
+    }
+
+    private function setCurrentPlayerIsInPenaltyBox($value)
+    {
+        $this->inPenaltyBox[$this->getCurrentPlayerId()] = $value;
+    }
+
+    private function getCurrentPlayerIsInPenaltyBox()
+    {
+        return $this->inPenaltyBox[$this->getCurrentPlayerId()];
     }
 }
