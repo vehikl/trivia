@@ -4,11 +4,14 @@ use PHPUnit\Framework\TestCase;
 
 class GameTest extends TestCase
 {
+
     /**
      * @dataProvider seedProvider
+     * @param $seed
      */
-    public function testGameProducesExpectedOutput($seed)
+    public function testGameProducesExpectedOutput(int $seed)
     {
+
         $file = tempnam('/tmp', 'game-');
         playGame($seed, $file);
 
@@ -19,12 +22,15 @@ class GameTest extends TestCase
 
     protected function assertMatchesSeededOutput($seed, $actualOutput)
     {
-        $this->assertStringEqualsFile(__DIR__.'/fixtures/output-seeded-with-'.$seed.'.txt', $actualOutput);
+
+        $this->assertStringEqualsFile(__DIR__ . '/fixtures/output-seeded-with-' . $seed . '.txt', $actualOutput);
     }
 
     public function seedProvider()
     {
+
         return array_map(function ($seed) {
+
             return [$seed];
         }, range(201, 300));
     }

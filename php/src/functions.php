@@ -13,8 +13,6 @@ function playGame($seed, $outputFile)
         fwrite($obFile, $buffer);
     });
 
-    $notAWinner;
-
     $aGame = new Game();
 
     $aGame->add("Chet");
