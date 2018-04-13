@@ -43,11 +43,6 @@ class Game
         return "Rock Question " . $index;
     }
 
-    public function isPlayable()
-    {
-        return ($this->howManyPlayers() >= 2);
-    }
-
     public function add($playerName)
     {
         array_push($this->players, $playerName);
