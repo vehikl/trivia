@@ -3,7 +3,7 @@
 class Game
 {
     private $players;
-    private $currentPlayer = 0;
+    private $currentPlayer_id = 0;
 
     private $popQuestions;
     private $scienceQuestions;
@@ -54,16 +54,16 @@ class Game
 
     public function roll($roll)
     {
-        echoln("{$this->getCurrentPlayerName()} is the current player");
+        echoln("{$this->getCurrentPlayer()->getName()} is the current player");
         echoln("They have rolled a {$roll}");
 
-        if ($this->getCurrentPlayerIsInPenaltyBox() && $this->rolledOdds($roll)) {
-            $this->setCurrentPlayerIsGettingOutOfPenaltyBox(true);
-            echoln("{$this->getCurrentPlayerName()} is getting out of the penalty box");
+        if ($this->getCurrentPlayer()->getIsInPenaltyBox() && $this->rolledOdds($roll)) {
+            $this->getCurrentPlayer()->setIsGettingOutOfPenaltyBox(true);
+            echoln("{$this->getCurrentPlayer()->getName()} is getting out of the penalty box");
             $this->movePlayer($roll);
-        } else if ($this->getCurrentPlayerIsInPenaltyBox()) {
-            echoln("{$this->getCurrentPlayerName()} is not getting out of the penalty box");
-            $this->setCurrentPlayerIsGettingOutOfPenaltyBox(false);
+        } else if ($this->getCurrentPlayer()->getIsInPenaltyBox()) {
+            echoln("{$this->getCurrentPlayer()->getName()} is not getting out of the penalty box");
+            $this->getCurrentPlayer()->setIsGettingOutOfPenaltyBox(false);
         } else {
             $this->movePlayer($roll);
         }
@@ -76,12 +76,12 @@ class Game
 
     private function movePlayer($roll)
     {
-        $this->setCurrentPlayerSpace($this->getCurrentPlayerSpace() + $roll);
-        if ($this->getCurrentPlayerSpace() > self::LAST_PLACE) {
-            $this->setCurrentPlayerSpace($this->getCurrentPlayerSpace() - self::TOTAL_PLACES);
+        $this->getCurrentPlayer()->setSpace($this->getCurrentPlayer()->getSpace() + $roll);
+        if ($this->getCurrentPlayer()->getSpace() > self::LAST_PLACE) {
+            $this->getCurrentPlayer()->setSpace($this->getCurrentPlayer()->getSpace() - self::TOTAL_PLACES);
         }
 
-        echoln("{$this->getCurrentPlayerName()}'s new location is {$this->getCurrentPlayerSpace()}");
+        echoln("{$this->getCurrentPlayer()->getName()}'s new location is {$this->getCurrentPlayer()->getSpace()}");
         echoln("The category is {$this->currentCategory()}");
         $this->askQuestion();
     }
@@ -107,39 +107,39 @@ class Game
 
     private function currentCategory()
     {
-        if ($this->getCurrentPlayerSpace() == 0) {
+        if ($this->getCurrentPlayer()->getSpace() == 0) {
             return "Pop";
         }
 
-        if ($this->getCurrentPlayerSpace() == 4) {
+        if ($this->getCurrentPlayer()->getSpace() == 4) {
             return "Pop";
         }
 
-        if ($this->getCurrentPlayerSpace() == 8) {
+        if ($this->getCurrentPlayer()->getSpace() == 8) {
             return "Pop";
         }
 
-        if ($this->getCurrentPlayerSpace() == 1) {
+        if ($this->getCurrentPlayer()->getSpace() == 1) {
             return "Science";
         }
 
-        if ($this->getCurrentPlayerSpace() == 5) {
+        if ($this->getCurrentPlayer()->getSpace() == 5) {
             return "Science";
         }
 
-        if ($this->getCurrentPlayerSpace() == 9) {
+        if ($this->getCurrentPlayer()->getSpace() == 9) {
             return "Science";
         }
 
-        if ($this->getCurrentPlayerSpace() == 2) {
+        if ($this->getCurrentPlayer()->getSpace() == 2) {
             return "Sports";
         }
 
-        if ($this->getCurrentPlayerSpace() == 6) {
+        if ($this->getCurrentPlayer()->getSpace() == 6) {
             return "Sports";
         }
 
-        if ($this->getCurrentPlayerSpace() == 10) {
+        if ($this->getCurrentPlayer()->getSpace() == 10) {
             return "Sports";
         }
 
@@ -148,10 +148,10 @@ class Game
 
     public function wasCorrectlyAnswered()
     {
-        if ($this->getCurrentPlayerIsInPenaltyBox() && $this->getCurrentPlayerIsGettingOutOfPenaltyBox()) {
+        if ($this->getCurrentPlayer()->getIsInPenaltyBox() && $this->getCurrentPlayer()->getIsGettingOutOfPenaltyBox()) {
             echoln("Answer was correct!!!!");
             return $this->givePlayerGoldCoin();
-        } elseif ($this->getCurrentPlayerIsInPenaltyBox()) {
+        } elseif ($this->getCurrentPlayer()->getIsInPenaltyBox()) {
             $this->passTheDice();
             return $gameIsNotOver = true;
         } else {
@@ -162,8 +162,8 @@ class Game
 
     private function givePlayerGoldCoin()
     {
-        $this->addCoinToCurrentPlayer();
-        echoln("{$this->getCurrentPlayerName()} now has {$this->getCurrentPlayerCoins()} Gold Coins.");
+        $this->getCurrentPlayer()->addCoin();
+        echoln("{$this->getCurrentPlayer()->getName()} now has {$this->getCurrentPlayer()->getCoins()} Gold Coins.");
 
         $gameIsNotOver = $this->didPlayerWin();
         $this->passTheDice();
@@ -174,8 +174,8 @@ class Game
     public function wrongAnswer()
     {
         echoln("Question was incorrectly answered");
-        echoln("{$this->getCurrentPlayerName()} was sent to the penalty box");
-        $this->setCurrentPlayerIsInPenaltyBox(true);
+        echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
+        $this->getCurrentPlayer()->setIsInPenaltyBox(true);
 
         $this->passTheDice();
 
@@ -184,69 +184,19 @@ class Game
 
     private function passTheDice()
     {
-        $this->currentPlayer++;
-        if ($this->currentPlayer == count($this->players)) {
-            $this->currentPlayer = 0;
+        $this->currentPlayer_id++;
+        if ($this->currentPlayer_id == count($this->players)) {
+            $this->currentPlayer_id = 0;
         }
     }
 
     private function didPlayerWin()
     {
-        return !($this->getCurrentPlayerCoins() == self::GOLD_COINS_TO_WIN);
+        return !($this->getCurrentPlayer()->getCoins() == self::GOLD_COINS_TO_WIN);
     }
 
     private function getCurrentPlayer()
     {
-        return $this->players[$this->getCurrentPlayerId()];
-    }
-
-    private function getCurrentPlayerId()
-    {
-        return $this->currentPlayer;
-    }
-
-    private function getCurrentPlayerName()
-    {
-        return $this->getCurrentPlayer()->getName();
-    }
-
-    private function getCurrentPlayerCoins()
-    {
-        return $this->getCurrentPlayer()->getCoins();
-    }
-
-    private function addCoinToCurrentPlayer()
-    {
-        $this->getCurrentPlayer()->addCoin();
-    }
-
-    private function setCurrentPlayerSpace($value)
-    {
-        $this->getCurrentPlayer()->setSpace($value);
-    }
-
-    private function getCurrentPlayerSpace()
-    {
-        return $this->getCurrentPlayer()->getSpace();
-    }
-
-    private function setCurrentPlayerIsInPenaltyBox($value)
-    {
-        $this->getCurrentPlayer()->setIsInPenaltyBox($value);
-    }
-
-    private function getCurrentPlayerIsInPenaltyBox()
-    {
-        return $this->getCurrentPlayer()->getIsInPenaltyBox();
-    }
-
-    private function setCurrentPlayerIsGettingOutOfPenaltyBox($value)
-    {
-        $this->getCurrentPlayer()->setIsGettingOutOfPenaltyBox($value);
-    }
-
-    private function getCurrentPlayerIsGettingOutOfPenaltyBox()
-    {
-        return $this->getCurrentPlayer()->getIsGettingOutOfPenaltyBox();
+        return $this->players[$this->currentPlayer_id];
     }
 }
