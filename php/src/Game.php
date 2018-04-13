@@ -1,7 +1,4 @@
 <?php
-function echoln($string) {
-  echo $string."\n";
-}
 
 class Game {
     var $players;
