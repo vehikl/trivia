@@ -128,46 +128,34 @@ const Game = function() {
     }
   };
 
+  var advanceCurrentPlayer = () => {
+    currentPlayer = (currentPlayer + 1) % players.length;
+  };
+
+  var reportCurrentPlayerGold = () => {
+    this.log(
+      players[currentPlayer] +
+        " now has " +
+        purses[currentPlayer] +
+        " Gold Coins."
+    );
+  };
+
   this.wasCorrectlyAnswered = () => {
-    if (inPenaltyBox[currentPlayer]) {
-      if (isGettingOutOfPenaltyBox) {
-        this.log("Answer was correct!!!!");
-        purses[currentPlayer] += 1;
-        this.log(
-          players[currentPlayer] +
-            " now has " +
-            purses[currentPlayer] +
-            " Gold Coins."
-        );
-
-        var winner = didPlayerWin();
-        currentPlayer += 1;
-        if (currentPlayer == players.length) currentPlayer = 0;
-
-        return winner;
-      } else {
-        currentPlayer += 1;
-        if (currentPlayer == players.length) currentPlayer = 0;
-        return true;
-      }
-    } else {
-      this.log("Answer was correct!!!!");
-
-      purses[currentPlayer] += 1;
-      this.log(
-        players[currentPlayer] +
-          " now has " +
-          purses[currentPlayer] +
-          " Gold Coins."
-      );
-
-      var winner = didPlayerWin();
-
-      currentPlayer += 1;
-      if (currentPlayer == players.length) currentPlayer = 0;
-
-      return winner;
+    if (inPenaltyBox[currentPlayer] && !isGettingOutOfPenaltyBox) {
+      advanceCurrentPlayer();
+      return true;
     }
+    this.log("Answer was correct!!!!");
+
+    purses[currentPlayer] += 1;
+    reportCurrentPlayerGold();
+
+    var winner = didPlayerWin();
+
+    advanceCurrentPlayer();
+
+    return winner;
   };
 
   this.wrongAnswer = () => {
@@ -175,8 +163,7 @@ const Game = function() {
     this.log(players[currentPlayer] + " was sent to the penalty box");
     inPenaltyBox[currentPlayer] = true;
 
-    currentPlayer += 1;
-    if (currentPlayer == players.length) currentPlayer = 0;
+    advanceCurrentPlayer();
     return true;
   };
 
