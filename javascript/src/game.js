@@ -1,9 +1,3 @@
-// class Game {
-//   constructor (){
-//
-//   }
-// }
-
 const Game = function () {
   var players          = new Array();
   var places           = new Array(6);
@@ -67,6 +61,8 @@ const Game = function () {
     return true;
   };
 
+
+
   var askQuestion = function(){
     if(currentCategory() == 'Pop')
       console.log(popQuestions.shift());
@@ -121,15 +117,11 @@ const Game = function () {
                     purses[currentPlayer]  + " Gold Coins.");
 
         var winner = didPlayerWin();
-        currentPlayer += 1;
-        if(currentPlayer == players.length)
-          currentPlayer = 0;
+        this.setNextPlayer();
 
         return winner;
       }else{
-        currentPlayer += 1;
-        if(currentPlayer == players.length)
-          currentPlayer = 0;
+        this.setNextPlayer();
         return true;
       }
 
@@ -145,12 +137,16 @@ const Game = function () {
 
       var winner = didPlayerWin();
 
-      currentPlayer += 1;
-      if(currentPlayer == players.length)
-        currentPlayer = 0;
 
+      this.setNextPlayer();
       return winner;
     }
+  };
+
+  this.setNextPlayer = function(){
+    currentPlayer += 1;
+    if(currentPlayer == players.length)
+      currentPlayer = 0;
   };
 
   this.wrongAnswer = function(){
