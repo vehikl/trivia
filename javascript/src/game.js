@@ -109,17 +109,13 @@ const Game = function () {
   };
 
   this.wasCorrectlyAnswered = function(){
-    if(inPenaltyBox[currentPlayer]){
-      if(isGettingOutOfPenaltyBox){
-        console.log('Answer was correct!!!!');
-        purses[currentPlayer] += 1;
-        this.announceScore();
-      }
-    }else{
-      console.log("Answer was correct!!!!");
-      purses[currentPlayer] += 1;
-      this.announceScore();
+    if (inPenaltyBox[currentPlayer] && !isGettingOutOfPenaltyBox){
+      this.setNextPlayer();
+      return true;
     }
+    console.log("Answer was correct!!!!");
+    purses[currentPlayer] += 1;
+    this.announceScore();
     var winner = didPlayerWin();
     this.setNextPlayer();
     return winner;
