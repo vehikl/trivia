@@ -19,7 +19,7 @@ class GameTest extends TestCase
 
     protected function assertMatchesSeededOutput($seed, $actualOutput)
     {
-        $this->assertStringEqualsFile('./fixtures/output-seeded-with-'.$seed.'.txt', $actualOutput);
+        $this->assertStringEqualsFile(__DIR__.'/fixtures/output-seeded-with-'.$seed.'.txt', $actualOutput);
     }
 
     public function seedProvider()
