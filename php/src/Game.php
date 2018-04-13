@@ -62,15 +62,15 @@ class Game
 
     public function roll($roll)
     {
-        echoln($this->getCurrentPlayerName() . " is the current player");
+        echoln("{$this->getCurrentPlayerName()} is the current player");
         echoln("They have rolled a " . $roll);
 
         if ($this->getCurrentPlayerIsInPenaltyBox() && $this->rolledOdds($roll)) {
             $this->setCurrentPlayerIsGettingOutOfPenaltyBox(true);
-            echoln($this->getCurrentPlayerName() . " is getting out of the penalty box");
+            echoln("{$this->getCurrentPlayerName()} is getting out of the penalty box");
             $this->movePlayer($roll);
         } else if ($this->getCurrentPlayerIsInPenaltyBox()) {
-            echoln($this->getCurrentPlayerName() . " is not getting out of the penalty box");
+            echoln("{$this->getCurrentPlayerName()} is not getting out of the penalty box");
             $this->setCurrentPlayerIsGettingOutOfPenaltyBox(false);
         } else {
             $this->movePlayer($roll);
@@ -89,7 +89,7 @@ class Game
             $this->setCurrentPlayerSpace($this->getCurrentPlayerSpace() - self::TOTAL_PLACES);
         }
 
-        echoln($this->getCurrentPlayerName() . "'s new location is " . $this->getCurrentPlayerSpace());
+        echoln("{$this->getCurrentPlayerName()}'s new location is " . $this->getCurrentPlayerSpace());
         echoln("The category is " . $this->currentCategory());
         $this->askQuestion();
     }
@@ -171,7 +171,7 @@ class Game
     private function givePlayerGoldCoin()
     {
         $this->addCoinToCurrentPlayer();
-        echoln($this->getCurrentPlayerName() . " now has " . $this->getCurrentPlayerCoins() . " Gold Coins.");
+        echoln("{$this->getCurrentPlayerName()} now has " . $this->getCurrentPlayerCoins() . " Gold Coins.");
 
         $winner = $this->didPlayerWin();
         $this->passTheDice();
@@ -182,7 +182,7 @@ class Game
     public function wrongAnswer()
     {
         echoln("Question was incorrectly answered");
-        echoln($this->getCurrentPlayerName() . " was sent to the penalty box");
+        echoln("{$this->getCurrentPlayerName()} was sent to the penalty box");
         $this->setCurrentPlayerIsInPenaltyBox(true);
 
         $this->passTheDice();
