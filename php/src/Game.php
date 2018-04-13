@@ -66,38 +66,32 @@ class Game
 
     function askQuestion()
     {
-        if ($this->currentCategory() == "Pop")
+        if ($this->currentCategory() == "Pop") {
             echoln(array_shift($this->popQuestions));
-        if ($this->currentCategory() == "Science")
+        }
+        if ($this->currentCategory() == "Science") {
             echoln(array_shift($this->scienceQuestions));
-        if ($this->currentCategory() == "Sports")
+        }
+        if ($this->currentCategory() == "Sports") {
             echoln(array_shift($this->sportsQuestions));
-        if ($this->currentCategory() == "Rock")
+        }
+        if ($this->currentCategory() == "Rock") {
             echoln(array_shift($this->rockQuestions));
+        }
     }
 
 
     function currentCategory()
     {
-        if ($this->places[$this->currentPlayer] == 0)
+        if (in_array($this->places[$this->currentPlayer], [0, 4, 8])) {
             return "Pop";
-        if ($this->places[$this->currentPlayer] == 4)
-            return "Pop";
-        if ($this->places[$this->currentPlayer] == 8)
-            return "Pop";
-        if ($this->places[$this->currentPlayer] == 1)
+        }
+        if (in_array($this->places[$this->currentPlayer], [1, 5, 9])) {
             return "Science";
-        if ($this->places[$this->currentPlayer] == 5)
-            return "Science";
-        if ($this->places[$this->currentPlayer] == 9)
-            return "Science";
-        if ($this->places[$this->currentPlayer] == 2)
+        }
+        if (in_array($this->places[$this->currentPlayer], [2, 6, 10])) {
             return "Sports";
-        if ($this->places[$this->currentPlayer] == 6)
-            return "Sports";
-        if ($this->places[$this->currentPlayer] == 10)
-            return "Sports";
-
+        }
         return "Rock";
     }
 
