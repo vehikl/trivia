@@ -20,6 +20,8 @@ class Game
     const TOTAL_PLACES = 12;
     const LAST_PLACE = 11;
 
+    const GOLD_COINS_TO_WIN = 6;
+
     public function __construct()
     {
 
@@ -233,6 +235,6 @@ class Game
 
     private function didPlayerWin()
     {
-        return !($this->purses[$this->currentPlayer] == 6);
+        return !($this->purses[$this->currentPlayer] == self::GOLD_COINS_TO_WIN);
     }
 }
