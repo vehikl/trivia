@@ -75,32 +75,28 @@ class Game
                 $this->isGettingOutOfPenaltyBox = true;
 
                 echoln($this->players[$this->currentPlayer] . " is getting out of the penalty box");
-                $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
-                if ($this->places[$this->currentPlayer] > self::LAST_PLACE) {
-                    $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - self::TOTAL_PLACES;
-                }
-
-                echoln($this->players[$this->currentPlayer]
-                    . "'s new location is "
-                    . $this->places[$this->currentPlayer]);
-                echoln("The category is " . $this->currentCategory());
-                $this->askQuestion();
+                $this->movePlayer($roll);
             } else {
                 echoln($this->players[$this->currentPlayer] . " is not getting out of the penalty box");
                 $this->isGettingOutOfPenaltyBox = false;
             }
         } else {
-            $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
-            if ($this->places[$this->currentPlayer] > self::LAST_PLACE) {
-                $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - self::TOTAL_PLACES;
-            }
-
-            echoln($this->players[$this->currentPlayer]
-                . "'s new location is "
-                . $this->places[$this->currentPlayer]);
-            echoln("The category is " . $this->currentCategory());
-            $this->askQuestion();
+            $this->movePlayer($roll);
         }
+    }
+
+    private function movePlayer($roll)
+    {
+        $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
+        if ($this->places[$this->currentPlayer] > self::LAST_PLACE) {
+            $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - self::TOTAL_PLACES;
+        }
+
+        echoln($this->players[$this->currentPlayer]
+            . "'s new location is "
+            . $this->places[$this->currentPlayer]);
+        echoln("The category is " . $this->currentCategory());
+        $this->askQuestion();
     }
 
     private function askQuestion()
