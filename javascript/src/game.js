@@ -1,4 +1,6 @@
 const Game = function () {
+  let hasWinner = false;
+
   var players          = new Array();
   var places           = new Array(6);
   var purses           = new Array(6);
@@ -13,7 +15,8 @@ const Game = function () {
   var isGettingOutOfPenaltyBox = false;
 
   var didPlayerWin = function(){
-    return !(purses[currentPlayer] == 6)
+    console.log('Did player win?', (purses[currentPlayer] == 6));
+    return (purses[currentPlayer] == 6)
   };
 
   var currentCategory = function(){
@@ -117,28 +120,12 @@ const Game = function () {
 
   this.wasCorrectlyAnswered = function(){
     if(inPenaltyBox[currentPlayer]){
-      if(isGettingOutOfPenaltyBox){
+      if(isGettingOutOfPenaltyBox) {
         console.log('Answer was correct!!!!');
         purses[currentPlayer] += 1;
-        console.log(players[currentPlayer] + " now has " +
-                    purses[currentPlayer]  + " Gold Coins.");
-
-        var winner = didPlayerWin();
-        currentPlayer += 1;
-        if(currentPlayer == players.length)
-          currentPlayer = 0;
-
-        return winner;
-      }else{
-        currentPlayer += 1;
-        if(currentPlayer == players.length)
-          currentPlayer = 0;
-        return true;
+        console.log(players[currentPlayer] + " now has " + purses[currentPlayer]  + " Gold Coins.");
       }
-
-
-
-    }else{
+    } else {
 
       console.log("Answer was correct!!!!");
 
@@ -146,15 +133,25 @@ const Game = function () {
       console.log(players[currentPlayer] + " now has " +
                   purses[currentPlayer]  + " Gold Coins.");
 
-      var winner = didPlayerWin();
-
-      currentPlayer += 1;
-      if(currentPlayer == players.length)
-        currentPlayer = 0;
-
-      return winner;
+      this.hasWinner = didPlayerWin();
     }
   };
+
+  this.nextPlayer = function () {
+    currentPlayer += 1;
+
+    if(currentPlayer == players.length) {
+      currentPlayer = 0;
+    }
+  }
+
+  this.checkAnswer = function() {
+    if (Math.floor(Math.random()*10) == 7){
+      this.wrongAnswer();
+    } else {
+      this.wasCorrectlyAnswered();
+    }
+  }
 
   this.wrongAnswer = function(){
 		console.log('Question was incorrectly answered');
@@ -164,7 +161,6 @@ const Game = function () {
     currentPlayer += 1;
     if(currentPlayer == players.length)
       currentPlayer = 0;
-		return true;
   };
 };
 
