@@ -21,9 +21,6 @@ class Game
     {
 
         $this->players = array();
-        $this->places = array(0);
-        $this->purses = array(0);
-        $this->inPenaltyBox = array(0);
 
         $this->popQuestions = array();
         $this->scienceQuestions = array();
