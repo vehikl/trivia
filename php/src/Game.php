@@ -61,7 +61,7 @@ class Game
             return;
         }
 
-        if ($roll % 2 != 0) {
+        if ($this->canGetOutOfPenaltyBox($roll)) {
             $this->isGettingOutOfPenaltyBox = true;
 
             echoln($this->players[$this->currentPlayer] . " is getting out of the penalty box");
@@ -71,6 +71,11 @@ class Game
 
         echoln($this->players[$this->currentPlayer] . " is not getting out of the penalty box");
         $this->isGettingOutOfPenaltyBox = false;
+    }
+
+    private function canGetOutOfPenaltyBox($roll)
+    {
+        return $roll % 2 != 0;
     }
 
     function askQuestion()
@@ -158,6 +163,8 @@ class Game
     }
 
     /**
+     * Do a turn
+     *
      * @param $roll
      */
     private function doTurn($roll)
