@@ -23,12 +23,6 @@ class Game
         $this->purses       = [0];
         $this->inPenaltyBox = [0];
 
-        $this->popQuestions     = [];
-        $this->scienceQuestions = [];
-        $this->sportsQuestions  = [];
-        $this->rockQuestions    = [];
-
-
         $this->generateQuestions();
     }
 
@@ -45,9 +39,7 @@ class Game
         $this->inPenaltyBox[$this->howManyPlayers()] = false;
 
         echoln($playerName . " was added");
-        echoln("They are player number " . count($this->players));
-
-        return true;
+        echoln("They are player number " . $this->howManyPlayers());
     }
 
     function howManyPlayers()
@@ -61,37 +53,17 @@ class Game
         echoln("They have rolled a " . $roll);
 
         if ($this->inPenaltyBox[$this->currentPlayer]) {
-            if ($roll % 2 != 0) {
-                $this->isGettingOutOfPenaltyBox = true;
-
-                echoln($this->players[$this->currentPlayer] . " is getting out of the penalty box");
-                $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
-                if ($this->places[$this->currentPlayer] > 11)
-                    $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - 12;
-
-                echoln($this->players[$this->currentPlayer]
-                    . "'s new location is "
-                    . $this->places[$this->currentPlayer]);
-                echoln("The category is " . $this->currentCategory());
-                $this->askQuestion();
-            } else {
+            if ($roll % 2 == 0) {
                 echoln($this->players[$this->currentPlayer] . " is not getting out of the penalty box");
                 $this->isGettingOutOfPenaltyBox = false;
+
+                return;
             }
-
-        } else {
-
-            $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
-            if ($this->places[$this->currentPlayer] > 11)
-                $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - 12;
-
-            echoln($this->players[$this->currentPlayer]
-                . "'s new location is "
-                . $this->places[$this->currentPlayer]);
-            echoln("The category is " . $this->currentCategory());
-            $this->askQuestion();
+            $this->isGettingOutOfPenaltyBox = true;
+            echoln($this->players[$this->currentPlayer] . " is getting out of the penalty box");
         }
 
+        $this->movePlayer($roll);
     }
 
     function askQuestion()
@@ -215,5 +187,21 @@ class Game
     private function createQuestion($category, $index)
     {
         return $category . " Question " . $index;
+    }
+
+    /**
+     * @param $roll
+     */
+    public function movePlayer($roll)
+    {
+        $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
+        if ($this->places[$this->currentPlayer] > 11)
+            $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - 12;
+
+        echoln($this->players[$this->currentPlayer]
+            . "'s new location is "
+            . $this->places[$this->currentPlayer]);
+        echoln("The category is " . $this->currentCategory());
+        $this->askQuestion();
     }
 }
