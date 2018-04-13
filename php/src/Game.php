@@ -171,8 +171,6 @@ class Game
         if ($this->places[$this->currentPlayer] == 11) {
             return "Sports";
         }
-
-        return "Rock";
     }
 
     public function wasCorrectlyAnswered()
