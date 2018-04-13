@@ -100,43 +100,20 @@ class Game
         if ($this->inPenaltyBox[$this->currentPlayer]) {
             if ($this->isGettingOutOfPenaltyBox) {
                 echoln("Answer was correct!!!!");
-                $this->purses[$this->currentPlayer]++;
-                echoln($this->players[$this->currentPlayer]
-                    . " now has "
-                    . $this->purses[$this->currentPlayer]
-                    . " Gold Coins.");
 
-                $winner = $this->didPlayerWin();
-                $this->currentPlayer++;
-                if ($this->currentPlayer == count($this->players))
-                    $this->currentPlayer = 0;
-
-                return $winner;
+                return $this->isWinner();
             } else {
                 $this->currentPlayer++;
-                if ($this->currentPlayer == count($this->players))
+                if ($this->currentPlayer == count($this->players)) {
                     $this->currentPlayer = 0;
-
+                }
                 return true;
             }
-
-
-        } else {
-
-            echoln("Answer was corrent!!!!");
-            $this->purses[$this->currentPlayer]++;
-            echoln($this->players[$this->currentPlayer]
-                . " now has "
-                . $this->purses[$this->currentPlayer]
-                . " Gold Coins.");
-
-            $winner = $this->didPlayerWin();
-            $this->currentPlayer++;
-            if ($this->currentPlayer == count($this->players))
-                $this->currentPlayer = 0;
-
-            return $winner;
         }
+
+        echoln("Answer was corrent!!!!");
+
+        return $this->isWinner();
     }
 
     function wrongAnswer()
@@ -146,9 +123,9 @@ class Game
         $this->inPenaltyBox[$this->currentPlayer] = true;
 
         $this->currentPlayer++;
-        if ($this->currentPlayer == count($this->players))
+        if ($this->currentPlayer == count($this->players)) {
             $this->currentPlayer = 0;
-
+        }
         return true;
     }
 
@@ -205,5 +182,24 @@ class Game
         $not = $isGettingOut ? '' : 'not ';
         echoln($this->players[$this->currentPlayer] . " is {$not}getting out of the penalty box");
         $this->isGettingOutOfPenaltyBox = $isGettingOut;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWinner()
+    {
+        $this->purses[$this->currentPlayer]++;
+        echoln($this->players[$this->currentPlayer]
+            . " now has "
+            . $this->purses[$this->currentPlayer]
+            . " Gold Coins.");
+
+        $winner = $this->didPlayerWin();
+        $this->currentPlayer++;
+        if ($this->currentPlayer == count($this->players))
+            $this->currentPlayer = 0;
+
+        return $winner;
     }
 }
