@@ -3,7 +3,7 @@
 class Game
 {
     private $players;
-    private $currentPlayer_id = 0;
+    private $currentPlayerId = 0;
 
     private $popQuestions;
     private $scienceQuestions;
@@ -184,9 +184,9 @@ class Game
 
     private function passTheDice()
     {
-        $this->currentPlayer_id++;
-        if ($this->currentPlayer_id == count($this->players)) {
-            $this->currentPlayer_id = 0;
+        $this->currentPlayerId++;
+        if ($this->currentPlayerId == count($this->players)) {
+            $this->currentPlayerId = 0;
         }
     }
 
@@ -197,6 +197,6 @@ class Game
 
     private function getCurrentPlayer()
     {
-        return $this->players[$this->currentPlayer_id];
+        return $this->players[$this->currentPlayerId];
     }
 }
