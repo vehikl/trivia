@@ -37,15 +37,10 @@ class Game
 
         for ($i = 0; $i < self::QUESTIONS_PER_CATEGORY; $i++) {
             array_push($this->popQuestions, "Pop Question " . $i);
-            array_push($this->scienceQuestions, ("Science Question " . $i));
-            array_push($this->sportsQuestions, ("Sports Question " . $i));
-            array_push($this->rockQuestions, $this->createRockQuestion($i));
+            array_push($this->scienceQuestions, "Science Question " . $i);
+            array_push($this->sportsQuestions, "Sports Question " . $i);
+            array_push($this->rockQuestions, "Rock Question " . $i);
         }
-    }
-
-    private function createRockQuestion($index)
-    {
-        return "Rock Question " . $index;
     }
 
     public function add($playerName)
