@@ -86,47 +86,46 @@ const Game = function () {
     }
   };
 
-  var addRollToCurrentPlayerPlace = (roll) => {
-    this.log(players[currentPlayer] + " is getting out of the penalty box");
-    places[currentPlayer] = (places[currentPlayer] + roll) % 12;
-  }
-
-  var rollInPenaltyNotFactorOfTwo = (roll) => {
-    isGettingOutOfPenaltyBox = true;
-
-    this.log(players[currentPlayer] + " is getting out of the penalty box");
-    places[currentPlayer] = (places[currentPlayer] + roll) % 12;
-
+  var reportPositionAndAskQuestion = () => {
     this.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
     this.log("The category is " + currentCategory());
     askQuestion();
+  }
+
+  var addRollToCurrentPlayerPlace = (roll) => {
+    places[currentPlayer] = (places[currentPlayer] + roll) % 12;
+  }
+
+  var rollToGetOutOfPenaltyBox = (roll) => {
+    isGettingOutOfPenaltyBox = true;
+
+    this.log(players[currentPlayer] + " is getting out of the penalty box");
+    addRollToCurrentPlayerPlace(roll);
+    reportPositionAndAskQuestion();
+
   };
 
-  var rollInPenaltyWhenFactorOfTwo = (roll) => {
+  var rollButStillInPenalty = () => {
     this.log(players[currentPlayer] + " is not getting out of the penalty box");
     isGettingOutOfPenaltyBox = false;
   };
+
+  var canGetOutOfPenaltyFromRoll = (roll) => roll % 2 != 0;
 
   this.roll = (roll) => {
     this.log(players[currentPlayer] + " is the current player");
     this.log("They have rolled a " + roll);
 
     if(inPenaltyBox[currentPlayer]){
-      if(roll % 2 != 0){
-        rollInPenaltyNotFactorOfTwo(roll);
+      if(canGetOutOfPenaltyFromRoll(roll)){
+        rollToGetOutOfPenaltyBox(roll);
       }else{
-        rollInPenaltyWhenFactorOfTwo(roll);
+        rollButStillInPenalty();
       }
     }else{
 
-      places[currentPlayer] = places[currentPlayer] + roll;
-      if(places[currentPlayer] > 11){
-        places[currentPlayer] = places[currentPlayer] - 12;
-      }
-
-      this.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
-      this.log("The category is " + currentCategory());
-      askQuestion();
+      addRollToCurrentPlayerPlace(roll);
+      reportPositionAndAskQuestion()
     }
   };
 
