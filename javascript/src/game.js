@@ -149,6 +149,11 @@ const Game = function () {
       currentPlayer = 0;
   };
 
+  this.announceScore = function(){
+    console.log(players[currentPlayer] + " now has " +
+                purses[currentPlayer]  + " Gold Coins.");
+  };
+
   this.wrongAnswer = function(){
 		console.log('Question was incorrectly answered');
 		console.log(players[currentPlayer] + " was sent to the penalty box");
