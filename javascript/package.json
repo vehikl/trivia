@@ -1,0 +1,13 @@
+{
+  "name": "game-runner",
+  "version": "0.1",
+  "main": "game.js",
+  "license": "MIT",
+  "scripts": {
+    "play": "node bin/game-runner.js",
+    "test": "jasmine spec/game.spec.js"
+  },
+  "dependencies": {
+    "seedrandom": "^2.4.3"
+  }
+}
