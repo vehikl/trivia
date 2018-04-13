@@ -2,28 +2,19 @@
 
 class Game
 {
-    private $players;
-    private $places;
-    private $purses;
-    private $inPenaltyBox;
-    private $popQuestions;
-    private $scienceQuestions;
-    private $sportsQuestions;
-    private $rockQuestions;
+    private $players = [];
+    private $places = [0];
+    private $purses = [0];
+    private $inPenaltyBox = [0];
+    private $popQuestions = [];
+    private $scienceQuestions = [];
+    private $sportsQuestions = [];
+    private $rockQuestions = [];
     private $currentPlayer = 0;
     private $isGettingOutOfPenaltyBox;
 
     function __construct()
     {
-        $this->players = array();
-        $this->places = array(0);
-        $this->purses = array(0);
-        $this->inPenaltyBox = array(0);
-        $this->popQuestions = array();
-        $this->scienceQuestions = array();
-        $this->sportsQuestions = array();
-        $this->rockQuestions = array();
-
         for ($i = 0; $i < 50; $i++) {
             array_push($this->popQuestions, "Pop Question " . $i);
             array_push($this->scienceQuestions, ("Science Question " . $i));
