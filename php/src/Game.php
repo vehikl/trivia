@@ -112,8 +112,7 @@ class Game
                 echoln("Answer was correct!!!!");
                 return $this->giveCoins();
             } else {
-                $this->currentPlayer++;
-                if ($this->currentPlayer == count($this->players)) $this->currentPlayer = 0;
+                $this->nextPlayer();
                 return true;
             }
         } else {
@@ -127,9 +126,7 @@ class Game
         echoln("Question was incorrectly answered");
         echoln($this->players[$this->currentPlayer] . " was sent to the penalty box");
         $this->inPenaltyBox[$this->currentPlayer] = true;
-
-        $this->currentPlayer++;
-        if ($this->currentPlayer == count($this->players)) $this->currentPlayer = 0;
+        $this->nextPlayer();
         return true;
     }
 
@@ -171,5 +168,13 @@ class Game
         $this->currentPlayer++;
         if ($this->currentPlayer == count($this->players)) $this->currentPlayer = 0;
         return $winner;
+    }
+
+    private function nextPlayer()
+    {
+        $this->currentPlayer++;
+        if ($this->currentPlayer == count($this->players)) {
+            $this->currentPlayer = 0;
+        }
     }
 }
