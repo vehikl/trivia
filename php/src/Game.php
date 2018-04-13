@@ -161,7 +161,7 @@ class Game
             return $this->givePlayerGoldCoin();
         } elseif ($this->getCurrentPlayerIsInPenaltyBox()) {
             $this->passTheDice();
-            return true;
+            return $gameIsNotOver = true;
         } else {
             echoln("Answer was corrent!!!!");
             return $this->givePlayerGoldCoin();
@@ -173,10 +173,10 @@ class Game
         $this->addCoinToCurrentPlayer();
         echoln("{$this->getCurrentPlayerName()} now has " . $this->getCurrentPlayerCoins() . " Gold Coins.");
 
-        $winner = $this->didPlayerWin();
+        $gameIsNotOver = $this->didPlayerWin();
         $this->passTheDice();
 
-        return $winner;
+        return $gameIsNotOver;
     }
 
     public function wrongAnswer()
@@ -187,7 +187,7 @@ class Game
 
         $this->passTheDice();
 
-        return true;
+        return $gameIsNotOver = true;
     }
 
     private function passTheDice()
