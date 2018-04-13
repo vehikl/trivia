@@ -126,23 +126,7 @@ class Game
             return "Pop";
         }
 
-        if ($this->places[$this->currentPlayer] == 4) {
-            return "Pop";
-        }
-
-        if ($this->places[$this->currentPlayer] == 8) {
-            return "Pop";
-        }
-
         if ($this->places[$this->currentPlayer] == 1) {
-            return "Science";
-        }
-
-        if ($this->places[$this->currentPlayer] == 5) {
-            return "Science";
-        }
-
-        if ($this->places[$this->currentPlayer] == 9) {
             return "Science";
         }
 
@@ -150,11 +134,39 @@ class Game
             return "Sports";
         }
 
+        if ($this->places[$this->currentPlayer] == 3) {
+            return "Sports";
+        }
+
+        if ($this->places[$this->currentPlayer] == 4) {
+            return "Pop";
+        }
+
+        if ($this->places[$this->currentPlayer] == 5) {
+            return "Science";
+        }
+
         if ($this->places[$this->currentPlayer] == 6) {
             return "Sports";
         }
 
+        if ($this->places[$this->currentPlayer] == 7) {
+            return "Sports";
+        }
+
+        if ($this->places[$this->currentPlayer] == 8) {
+            return "Pop";
+        }
+
+        if ($this->places[$this->currentPlayer] == 9) {
+            return "Science";
+        }
+
         if ($this->places[$this->currentPlayer] == 10) {
+            return "Sports";
+        }
+
+        if ($this->places[$this->currentPlayer] == 11) {
             return "Sports";
         }
 
