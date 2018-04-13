@@ -159,19 +159,8 @@ class Game
         if ($this->inPenaltyBox[$this->currentPlayer]) {
             if ($this->isGettingOutOfPenaltyBox) {
                 echoln("Answer was correct!!!!");
-                $this->purses[$this->currentPlayer]++;
-                echoln($this->players[$this->currentPlayer]
-                    . " now has "
-                    . $this->purses[$this->currentPlayer]
-                    . " Gold Coins.");
+                return $this->givePlayerGoldCoin();
 
-                $winner = $this->didPlayerWin();
-                $this->currentPlayer++;
-                if ($this->currentPlayer == count($this->players)) {
-                    $this->currentPlayer = 0;
-                }
-
-                return $winner;
             } else {
                 $this->currentPlayer++;
                 if ($this->currentPlayer == count($this->players)) {
@@ -182,20 +171,25 @@ class Game
             }
         } else {
             echoln("Answer was corrent!!!!");
-            $this->purses[$this->currentPlayer]++;
-            echoln($this->players[$this->currentPlayer]
-                . " now has "
-                . $this->purses[$this->currentPlayer]
-                . " Gold Coins.");
-
-            $winner = $this->didPlayerWin();
-            $this->currentPlayer++;
-            if ($this->currentPlayer == count($this->players)) {
-                $this->currentPlayer = 0;
-            }
-
-            return $winner;
+            return $this->givePlayerGoldCoin();
         }
+    }
+
+    private function givePlayerGoldCoin()
+    {
+        $this->purses[$this->currentPlayer]++;
+        echoln($this->players[$this->currentPlayer]
+            . " now has "
+            . $this->purses[$this->currentPlayer]
+            . " Gold Coins.");
+
+        $winner = $this->didPlayerWin();
+        $this->currentPlayer++;
+        if ($this->currentPlayer == count($this->players)) {
+            $this->currentPlayer = 0;
+        }
+
+        return $winner;
     }
 
     public function wrongAnswer()
