@@ -67,13 +67,13 @@ class Game
 
         if ($this->getCurrentPlayerIsInPenaltyBox()) {
             if ($roll % 2 != 0) {
-                $this->isGettingOutOfPenaltyBox = true;
+                $this->setCurrentPlayerIsGettingOutOfPenaltyBox(true);
 
                 echoln($this->getCurrentPlayerName() . " is getting out of the penalty box");
                 $this->movePlayer($roll);
             } else {
                 echoln($this->getCurrentPlayerName() . " is not getting out of the penalty box");
-                $this->isGettingOutOfPenaltyBox = false;
+                $this->setCurrentPlayerIsGettingOutOfPenaltyBox(false);
             }
         } else {
             $this->movePlayer($roll);
@@ -157,7 +157,7 @@ class Game
     public function wasCorrectlyAnswered()
     {
         if ($this->getCurrentPlayerIsInPenaltyBox()) {
-            if ($this->isGettingOutOfPenaltyBox) {
+            if ($this->getCurrentPlayerIsGettingOutOfPenaltyBox()) {
                 echoln("Answer was correct!!!!");
                 return $this->givePlayerGoldCoin();
             } else {
@@ -244,5 +244,15 @@ class Game
     private function getCurrentPlayerIsInPenaltyBox()
     {
         return $this->inPenaltyBox[$this->getCurrentPlayerId()];
+    }
+
+    private function setCurrentPlayerIsGettingOutOfPenaltyBox($value)
+    {
+        $this->isGettingOutOfPenaltyBox = $value;
+    }
+
+    private function getCurrentPlayerIsGettingOutOfPenaltyBox()
+    {
+        return $this->isGettingOutOfPenaltyBox;
     }
 }
