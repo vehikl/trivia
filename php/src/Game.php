@@ -100,18 +100,18 @@ class Game
 
     function correctAnswer()
     {
-        if ($this->inPenaltyBox[$this->currentPlayer]) {
-            if ($this->isGettingOutOfPenaltyBox) {
-                echoln("Answer was correct!!!!");
-                return $this->giveCoins();
-            } else {
-                $this->nextPlayer();
-                return true;
-            }
-        } else {
+        if (! $this->inPenaltyBox[$this->currentPlayer]) {
             echoln("Answer was corrent!!!!");
             return $this->giveCoins();
         }
+
+        if ($this->isGettingOutOfPenaltyBox) {
+            echoln("Answer was correct!!!!");
+            return $this->giveCoins();
+        }
+
+        $this->nextPlayer();
+        return true;
     }
 
     function wrongAnswer()
@@ -124,16 +124,11 @@ class Game
     }
 
 
-    function didPlayerWin()
+    private function didPlayerWin()
     {
         return !($this->purses[$this->currentPlayer] == self::WINNING_COIN_COUNT);
     }
 
-    /**
-     * Do a turn
-     *
-     * @param $roll
-     */
     private function doTurn($roll)
     {
         $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
@@ -145,9 +140,6 @@ class Game
         $this->askQuestion();
     }
 
-    /**
-     * @return bool
-     */
     private function giveCoins()
     {
         $this->purses[$this->currentPlayer]++;
