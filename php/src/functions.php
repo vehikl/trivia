@@ -2,7 +2,7 @@
 
 function echoln($string)
 {
-    echo $string."\n";
+    echo $string . "\n";
 }
 
 function playGame($seed, $outputFile)
