@@ -163,8 +163,8 @@ class Game
     private function doTurn($roll)
     {
         $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] + $roll;
-        if ($this->places[$this->currentPlayer] > 11) {
-            $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - 12;
+        if ($this->places[$this->currentPlayer] > self::MAX_PLACES - 1) {
+            $this->places[$this->currentPlayer] = $this->places[$this->currentPlayer] - self::MAX_PLACES;
         }
 
         echoln($this->players[$this->currentPlayer] . "'s new location is " . $this->places[$this->currentPlayer]);
