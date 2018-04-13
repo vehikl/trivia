@@ -46,6 +46,7 @@ class Game
     public function add($playerName)
     {
         array_push($this->players, $playerName);
+        $this->players_tmp[] = new Player($playerName);
         $this->places[$this->howManyPlayers()] = 0;
         $this->purses[$this->howManyPlayers()] = 0;
         $this->inPenaltyBox[$this->howManyPlayers()] = false;
@@ -193,7 +194,7 @@ class Game
     private function passTheDice()
     {
         $this->currentPlayer++;
-        if ($this->getCurrentPlayerId() == count($this->players)) {
+        if ($this->currentPlayer == count($this->players)) {
             $this->currentPlayer = 0;
         }
     }
@@ -203,6 +204,11 @@ class Game
         return !($this->getCurrentPlayerCoins() == self::GOLD_COINS_TO_WIN);
     }
 
+    private function getCurrentPlayer()
+    {
+        return $this->players_tmp[$this->getCurrentPlayerId()];
+    }
+
     private function getCurrentPlayerId()
     {
         return $this->currentPlayer;
@@ -210,46 +216,46 @@ class Game
 
     private function getCurrentPlayerName()
     {
-        return $this->players[$this->getCurrentPlayerId()];
+        return $this->getCurrentPlayer()->getName();
     }
 
     private function getCurrentPlayerCoins()
     {
-        return $this->purses[$this->getCurrentPlayerId()];
+        return $this->getCurrentPlayer()->getCoins();
     }
 
     private function addCoinToCurrentPlayer()
     {
-        $this->purses[$this->getCurrentPlayerId()]++;
+        $this->getCurrentPlayer()->addCoin();
     }
 
     private function setCurrentPlayerSpace($value)
     {
-        $this->places[$this->getCurrentPlayerId()] = $value;
+        $this->getCurrentPlayer()->setSpace($value);
     }
 
     private function getCurrentPlayerSpace()
     {
-        return $this->places[$this->getCurrentPlayerId()];
+        return $this->getCurrentPlayer()->getSpace();
     }
 
     private function setCurrentPlayerIsInPenaltyBox($value)
     {
-        $this->inPenaltyBox[$this->getCurrentPlayerId()] = $value;
+        $this->getCurrentPlayer()->setIsInPenaltyBox($value);
     }
 
     private function getCurrentPlayerIsInPenaltyBox()
     {
-        return $this->inPenaltyBox[$this->getCurrentPlayerId()];
+        return $this->getCurrentPlayer()->getIsInPenaltyBox();
     }
 
     private function setCurrentPlayerIsGettingOutOfPenaltyBox($value)
     {
-        $this->isGettingOutOfPenaltyBox = $value;
+        $this->getCurrentPlayer()->setIsGettingOutOfPenaltyBox($value);
     }
 
     private function getCurrentPlayerIsGettingOutOfPenaltyBox()
     {
-        return $this->isGettingOutOfPenaltyBox;
+        return $this->getCurrentPlayer()->getIsGettingOutOfPenaltyBox();
     }
 }
