@@ -2,18 +2,18 @@
 
 class Game
 {
-    public $players;
-    public $places;
-    public $purses;
-    public $inPenaltyBox;
+    private $players;
+    private $places;
+    private $purses;
+    private $inPenaltyBox;
 
-    public $popQuestions;
-    public $scienceQuestions;
-    public $sportsQuestions;
-    public $rockQuestions;
+    private $popQuestions;
+    private $scienceQuestions;
+    private $sportsQuestions;
+    private $rockQuestions;
 
-    public $currentPlayer = 0;
-    public $isGettingOutOfPenaltyBox;
+    private $currentPlayer = 0;
+    private $isGettingOutOfPenaltyBox;
 
     const QUESTIONS_PER_CATEGORY = 50;
 
@@ -38,7 +38,7 @@ class Game
         }
     }
 
-    public function createRockQuestion($index)
+    private function createRockQuestion($index)
     {
         return "Rock Question " . $index;
     }
@@ -55,7 +55,7 @@ class Game
         return true;
     }
 
-    public function howManyPlayers()
+    private function howManyPlayers()
     {
         return count($this->players);
     }
@@ -98,7 +98,7 @@ class Game
         }
     }
 
-    public function askQuestion()
+    private function askQuestion()
     {
         if ($this->currentCategory() == "Pop") {
             echoln(array_shift($this->popQuestions));
@@ -117,7 +117,7 @@ class Game
         }
     }
 
-    public function currentCategory()
+    private function currentCategory()
     {
         if ($this->places[$this->currentPlayer] == 0) {
             return "Pop";
@@ -216,7 +216,7 @@ class Game
         return true;
     }
 
-    public function didPlayerWin()
+    private function didPlayerWin()
     {
         return !($this->purses[$this->currentPlayer] == 6);
     }
