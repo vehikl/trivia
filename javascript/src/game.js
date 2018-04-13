@@ -1,3 +1,9 @@
+// class Game {
+//   constructor (){
+//
+//   }
+// }
+
 const Game = function () {
   var players          = new Array();
   var places           = new Array(6);
@@ -45,26 +51,21 @@ const Game = function () {
     rockQuestions.push("Rock Question "+i);
   };
 
-  this.isPlayable = function(howManyPlayers){
-    return howManyPlayers >= 2;
+  this.hasEnoughPlayers = function(){
+    return players.length >= 2;
   };
 
-  this.add = function(playerName){
+  this.addPlayer = function(playerName){
     players.push(playerName);
-    places[this.howManyPlayers() - 1] = 0;
-    purses[this.howManyPlayers() - 1] = 0;
-    inPenaltyBox[this.howManyPlayers() - 1] = false;
+    places[players.length - 1] = 0;
+    purses[players.length - 1] = 0;
+    inPenaltyBox[players.length - 1] = false;
 
     console.log(playerName + " was added");
     console.log("They are player number " + players.length);
 
     return true;
   };
-
-  this.howManyPlayers = function(){
-    return players.length;
-  };
-
 
   var askQuestion = function(){
     if(currentCategory() == 'Pop')
