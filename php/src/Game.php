@@ -110,38 +110,15 @@ class Game
         if ($this->inPenaltyBox[$this->currentPlayer]) {
             if ($this->isGettingOutOfPenaltyBox) {
                 echoln("Answer was correct!!!!");
-                $this->purses[$this->currentPlayer]++;
-                echoln($this->players[$this->currentPlayer]
-                    . " now has "
-                    . $this->purses[$this->currentPlayer]
-                    . " Gold Coins.");
-
-                $winner = $this->didPlayerWin();
-                $this->currentPlayer++;
-                if ($this->currentPlayer == count($this->players)) $this->currentPlayer = 0;
-
-                return $winner;
+                return $this->giveCoins();
             } else {
                 $this->currentPlayer++;
                 if ($this->currentPlayer == count($this->players)) $this->currentPlayer = 0;
                 return true;
             }
-
-
         } else {
-
             echoln("Answer was corrent!!!!");
-            $this->purses[$this->currentPlayer]++;
-            echoln($this->players[$this->currentPlayer]
-                . " now has "
-                . $this->purses[$this->currentPlayer]
-                . " Gold Coins.");
-
-            $winner = $this->didPlayerWin();
-            $this->currentPlayer++;
-            if ($this->currentPlayer == count($this->players)) $this->currentPlayer = 0;
-
-            return $winner;
+            return $this->giveCoins();
         }
     }
 
@@ -177,5 +154,22 @@ class Game
         echoln($this->players[$this->currentPlayer] . "'s new location is " . $this->places[$this->currentPlayer]);
         echoln("The category is " . $this->currentCategory());
         $this->askQuestion();
+    }
+
+    /**
+     * @return bool
+     */
+    private function giveCoins()
+    {
+        $this->purses[$this->currentPlayer]++;
+        echoln($this->players[$this->currentPlayer]
+            . " now has "
+            . $this->purses[$this->currentPlayer]
+            . " Gold Coins.");
+
+        $winner = $this->didPlayerWin();
+        $this->currentPlayer++;
+        if ($this->currentPlayer == count($this->players)) $this->currentPlayer = 0;
+        return $winner;
     }
 }
