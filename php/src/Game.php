@@ -3,17 +3,12 @@
 class Game
 {
     private $players;
-    private $places;
-    private $purses;
-    private $inPenaltyBox;
+    private $currentPlayer = 0;
 
     private $popQuestions;
     private $scienceQuestions;
     private $sportsQuestions;
     private $rockQuestions;
-
-    private $currentPlayer = 0;
-    private $isGettingOutOfPenaltyBox;
 
     const QUESTIONS_PER_CATEGORY = 50;
 
@@ -45,11 +40,7 @@ class Game
 
     public function add($playerName)
     {
-        array_push($this->players, $playerName);
-        $this->players_tmp[] = new Player($playerName);
-        $this->places[$this->howManyPlayers()] = 0;
-        $this->purses[$this->howManyPlayers()] = 0;
-        $this->inPenaltyBox[$this->howManyPlayers()] = false;
+        $this->players[] = new Player($playerName);
 
         echoln("{$playerName} was added");
         echoln("They are player number {$this->howManyPlayers()}");
@@ -206,7 +197,7 @@ class Game
 
     private function getCurrentPlayer()
     {
-        return $this->players_tmp[$this->getCurrentPlayerId()];
+        return $this->players[$this->getCurrentPlayerId()];
     }
 
     private function getCurrentPlayerId()
