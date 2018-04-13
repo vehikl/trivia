@@ -65,16 +65,13 @@ class Game
         echoln($this->getCurrentPlayerName() . " is the current player");
         echoln("They have rolled a " . $roll);
 
-        if ($this->getCurrentPlayerIsInPenaltyBox()) {
-            if ($roll % 2 != 0) {
-                $this->setCurrentPlayerIsGettingOutOfPenaltyBox(true);
-
-                echoln($this->getCurrentPlayerName() . " is getting out of the penalty box");
-                $this->movePlayer($roll);
-            } else {
-                echoln($this->getCurrentPlayerName() . " is not getting out of the penalty box");
-                $this->setCurrentPlayerIsGettingOutOfPenaltyBox(false);
-            }
+        if ($this->getCurrentPlayerIsInPenaltyBox() && $roll % 2 != 0) {
+            $this->setCurrentPlayerIsGettingOutOfPenaltyBox(true);
+            echoln($this->getCurrentPlayerName() . " is getting out of the penalty box");
+            $this->movePlayer($roll);
+        } else if ($this->getCurrentPlayerIsInPenaltyBox()) {
+            echoln($this->getCurrentPlayerName() . " is not getting out of the penalty box");
+            $this->setCurrentPlayerIsGettingOutOfPenaltyBox(false);
         } else {
             $this->movePlayer($roll);
         }
