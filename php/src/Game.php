@@ -50,8 +50,8 @@ class Game
         $this->purses[$this->howManyPlayers()] = 0;
         $this->inPenaltyBox[$this->howManyPlayers()] = false;
 
-        echoln($playerName . " was added");
-        echoln("They are player number " . count($this->players));
+        echoln("{$playerName} was added");
+        echoln("They are player number {$this->howManyPlayers()}");
         return true;
     }
 
@@ -63,7 +63,7 @@ class Game
     public function roll($roll)
     {
         echoln("{$this->getCurrentPlayerName()} is the current player");
-        echoln("They have rolled a " . $roll);
+        echoln("They have rolled a {$roll}");
 
         if ($this->getCurrentPlayerIsInPenaltyBox() && $this->rolledOdds($roll)) {
             $this->setCurrentPlayerIsGettingOutOfPenaltyBox(true);
@@ -89,8 +89,8 @@ class Game
             $this->setCurrentPlayerSpace($this->getCurrentPlayerSpace() - self::TOTAL_PLACES);
         }
 
-        echoln("{$this->getCurrentPlayerName()}'s new location is " . $this->getCurrentPlayerSpace());
-        echoln("The category is " . $this->currentCategory());
+        echoln("{$this->getCurrentPlayerName()}'s new location is {$this->getCurrentPlayerSpace()}");
+        echoln("The category is {$this->currentCategory()}");
         $this->askQuestion();
     }
 
@@ -171,7 +171,7 @@ class Game
     private function givePlayerGoldCoin()
     {
         $this->addCoinToCurrentPlayer();
-        echoln("{$this->getCurrentPlayerName()} now has " . $this->getCurrentPlayerCoins() . " Gold Coins.");
+        echoln("{$this->getCurrentPlayerName()} now has {$this->getCurrentPlayerCoins()} Gold Coins.");
 
         $gameIsNotOver = $this->didPlayerWin();
         $this->passTheDice();
