@@ -2,18 +2,18 @@
 
 class Game
 {
-    var $players;
-    var $places;
-    var $purses;
-    var $inPenaltyBox;
+    private $players;
+    private $places;
+    private $purses;
+    private $inPenaltyBox;
 
-    var $popQuestions;
-    var $scienceQuestions;
-    var $sportsQuestions;
-    var $rockQuestions;
+    private $popQuestions;
+    private $scienceQuestions;
+    private $sportsQuestions;
+    private $rockQuestions;
 
-    var $currentPlayer = 0;
-    var $isGettingOutOfPenaltyBox;
+    private $currentPlayer = 0;
+    private $isGettingOutOfPenaltyBox;
 
     function __construct()
     {
