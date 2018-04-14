@@ -8,6 +8,8 @@ class Game
     private $currentPlayerId = 0;
     private $questions = [];
 
+    private $turn;
+
     private $view;
 
     const QUESTIONS_PER_CATEGORY = 50;
@@ -18,7 +20,7 @@ class Game
     public function __construct()
     {
         $this->initializeQuestions();
-        $this->view = new View;
+        $this->view = new View($this);
     }
 
     private function initializeQuestions()
@@ -51,26 +53,13 @@ class Game
         return count($this->players);
     }
 
-    public function roll($value)
+    public function roll($rolledNumber)
     {
-        $roll = new Roll($value);
-        $player = $this->getCurrentPlayer();
-        $player->setRoll($roll);
-        $this->displayPlayerRolls($roll->getValue());
-
-        if ($player->isNotAllowedToMove()) {
-            return $this->displayPlayerStaysInPenaltyBox();
-        }
-
-        if ($player->isInPenaltyBox()) {
-            $this->displayPlayerGetsOutOfPenaltyBox();
-        }
-
-        $this->movePlayer($roll->getValue());
-        $this->askQuestion();
+        $this->turn = new Turn($this, new Roll($rolledNumber));
+        $this->turn->move();
     }
 
-    private function movePlayer($roll)
+    public function movePlayer($roll)
     {
         $newPlace = $this->getCurrentPlayer()->getSpace() + $roll;
         $newPlace = self::LAST_PLACE >= $newPlace ? $newPlace : $newPlace - self::TOTAL_PLACES;
@@ -78,7 +67,7 @@ class Game
         $this->displayPlayerMoves();
     }
 
-    private function askQuestion()
+    public function askQuestion()
     {
         $this->displayCategory();
         $category = strtolower($this->currentCategory());
@@ -155,7 +144,7 @@ class Game
         }, false);
     }
 
-    private function getCurrentPlayer()
+    public function getCurrentPlayer()
     {
         return $this->players[$this->currentPlayerId];
     }
@@ -169,12 +158,6 @@ class Game
     {
         $this->view->echoln("{$playerName} was added");
         $this->view->echoln("They are player number {$this->howManyPlayers()}");
-    }
-
-    protected function displayPlayerRolls($rolledNumber)
-    {
-        $this->view->echoln("{$this->getCurrentPlayer()->getName()} is the current player");
-        $this->view->echoln("They have rolled a {$rolledNumber}");
     }
 
     protected function displayPlayerMoves()
@@ -205,16 +188,6 @@ class Game
     protected function displayPlayerIsSentToPenaltyBox()
     {
         $this->view->echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
-    }
-
-    protected function displayPlayerStaysInPenaltyBox()
-    {
-        $this->view->echoln("{$this->getCurrentPlayer()->getName()} is not getting out of the penalty box");
-    }
-
-    protected function displayPlayerGetsOutOfPenaltyBox()
-    {
-        $this->view->echoln("{$this->getCurrentPlayer()->getName()} is getting out of the penalty box");
     }
 
     protected function displayPlayerReceivesGoldCoin()
