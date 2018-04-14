@@ -49,8 +49,8 @@ class Turn
 
     private function movePlayer($roll)
     {
-        $currentSpace = $this->player->getSpace();
-        $this->player->setSpace($this->board->findPlaceNumberOfPlacesFromCurrentPlace($currentSpace, $roll));
+        $currentSpace = $this->player->getPlace();
+        $this->player->moveTo($this->board->findPlaceNumberOfPlacesFromCurrentPlace($currentSpace, $roll));
         $this->view->displayPlayerMoves();
     }
 

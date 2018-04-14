@@ -54,15 +54,15 @@ class Game
         $sciencePlaces = [1, 5, 9];
         $sportsPlaces = [2, 6, 10];
 
-        if (in_array($this->getCurrentPlayer()->getSpace(), $popPlaces)) {
+        if (in_array($this->getCurrentPlayer()->getPlace(), $popPlaces)) {
             return "Pop";
         }
 
-        if (in_array($this->getCurrentPlayer()->getSpace(), $sciencePlaces)) {
+        if (in_array($this->getCurrentPlayer()->getPlace(), $sciencePlaces)) {
             return "Science";
         }
 
-        if (in_array($this->getCurrentPlayer()->getSpace(), $sportsPlaces)) {
+        if (in_array($this->getCurrentPlayer()->getPlace(), $sportsPlaces)) {
             return "Sports";
         }
 

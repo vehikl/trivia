@@ -5,7 +5,7 @@ namespace App;
 class Player
 {
     private $name;
-    private $place;
+    private $placeId;
     private $purse;
     private $roll;
     private $inPenaltyBox;
@@ -14,7 +14,7 @@ class Player
     public function __construct($name)
     {
         $this->name = $name;
-        $this->place = 0;
+        $this->placeId = 0;
         $this->purse = 0;
         $this->roll = 0;
         $this->inPenaltyBox = 0;
@@ -35,14 +35,14 @@ class Player
         $this->purse++;
     }
 
-    public function setSpace($value)
+    public function moveTo($placeId)
     {
-        $this->place = $value;
+        $this->placeId = $placeId;
     }
 
-    public function getSpace()
+    public function getPlace()
     {
-        return $this->place;
+        return $this->placeId;
     }
 
     public function setRoll($value)
