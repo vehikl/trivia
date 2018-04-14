@@ -43,16 +43,7 @@ class Game
 
     public function wasCorrectlyAnswered()
     {
-        return $this->correctAnswer();
-    }
-
-    public function correctAnswer()
-    {
-        if ($this->getCurrentPlayer()->isAllowedToAnswer()) {
-            $this->displayCorrectAnswer($this->useCorrent());
-            $this->givePlayerGoldCoin();
-        }
-
+        $this->turn->correctAnswer();
         return $this->passTheDice();
     }
 
@@ -62,12 +53,6 @@ class Game
         $this->sendPlayerToPenaltyBox();
 
         return $this->passTheDice();
-    }
-
-    private function givePlayerGoldCoin()
-    {
-        $this->getCurrentPlayer()->addCoin();
-        $this->displayPlayerReceivesGoldCoin();
     }
 
     private function sendPlayerToPenaltyBox()
@@ -105,20 +90,10 @@ class Game
         return $this->questions;
     }
 
-    private function useCorrent()
-    {
-        return $this->getCurrentPlayer()->isNotInPenaltyBox();
-    }
-
     protected function displayPlayerIsAdded($playerName)
     {
         $this->view->echoln("{$playerName} was added");
         $this->view->echoln("They are player number {$this->howManyPlayers()}");
-    }
-
-    protected function displayCorrectAnswer($withTypo)
-    {
-        $this->view->echoln("Answer was " . ($withTypo ? 'corrent' : 'correct') . "!!!!");
     }
 
     protected function displayWrongAnswer()
@@ -129,10 +104,5 @@ class Game
     protected function displayPlayerIsSentToPenaltyBox()
     {
         $this->view->echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
-    }
-
-    protected function displayPlayerReceivesGoldCoin()
-    {
-        $this->view->echoln("{$this->getCurrentPlayer()->getName()} now has {$this->getCurrentPlayer()->getCoins()} Gold Coins.");
     }
 }

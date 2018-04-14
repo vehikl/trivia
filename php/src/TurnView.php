@@ -46,4 +46,14 @@ class TurnView
     {
         $this->echoln($question);
     }
+
+    public function displayCorrectAnswer($withTypo)
+    {
+        $this->echoln("Answer was " . ($withTypo ? 'corrent' : 'correct') . "!!!!");
+    }
+
+    public function displayPlayerReceivesGoldCoin()
+    {
+        $this->echoln("{$this->player->getName()} now has {$this->player->getCoins()} Gold Coins.");
+    }
 }

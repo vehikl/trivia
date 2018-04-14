@@ -9,7 +9,6 @@ class Turn
     private $player;
     private $roll;
     private $startPlace;
-    private $game;
 
     private $view;
 
@@ -20,7 +19,6 @@ class Turn
         $this->player = $game->getCurrentPlayer();
         $this->roll = $roll;
         $this->startPlace = $this->player->getPlace();
-        $this->game = $game;
 
         $this->view = new TurnView($this->player);
     }
@@ -60,6 +58,20 @@ class Turn
         $this->view->displayQuestion($this->questions->askFrom($this->getCategory()));
     }
 
+    public function correctAnswer()
+    {
+        if ($this->player->isAllowedToAnswer()) {
+            $this->view->displayCorrectAnswer($this->useCorrent());
+            $this->givePlayerGoldCoin();
+        }
+    }
+
+    private function givePlayerGoldCoin()
+    {
+        $this->player->addCoin();
+        $this->view->displayPlayerReceivesGoldCoin();
+    }
+
     private function getCategory()
     {
         return $this->getEndPlace()->getCategory();
@@ -73,5 +85,10 @@ class Turn
     private function isPlayerGettingOutOfPenaltyBox()
     {
         return $this->roll->isOdd();
+    }
+
+    private function useCorrent()
+    {
+        return $this->player->isNotInPenaltyBox();
     }
 }
