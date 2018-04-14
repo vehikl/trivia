@@ -144,7 +144,7 @@ class Game
     private function sendPlayerToPenaltyBox()
     {
         $this->getCurrentPlayer()->receivePenalty();
-        echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
+        $this->displayPlayerSentToPenaltyBox();
     }
 
     private function passTheDice()
@@ -163,5 +163,10 @@ class Game
     private function getCurrentPlayer()
     {
         return $this->players[$this->currentPlayerId];
+    }
+
+    public function displayPlayerSentToPenaltyBox()
+    {
+        echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
     }
 }
