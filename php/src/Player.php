@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 class Player
 {
     private $name;

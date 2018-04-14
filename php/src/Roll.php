@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 class Roll
 {
     private $value;

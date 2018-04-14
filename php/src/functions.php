@@ -1,5 +1,7 @@
 <?php
 
+use App\Game;
+
 function echoln($string)
 {
     echo $string."\n";
