@@ -5,6 +5,7 @@ class Player
     private $name;
     private $place;
     private $purse;
+    private $roll;
     private $inPenaltyBox;
     private $isGettingOutOfPenaltyBox;
 
@@ -13,6 +14,7 @@ class Player
         $this->name = $name;
         $this->place = 0;
         $this->purse = 0;
+        $this->roll = 0;
         $this->inPenaltyBox = 0;
     }
 
@@ -41,14 +43,29 @@ class Player
         return $this->place;
     }
 
+    public function setRoll($value)
+    {
+        $this->roll = $value;
+    }
+
+    public function getRoll()
+    {
+        return $this->roll;
+    }
+
     public function setIsInPenaltyBox($value)
     {
         $this->inPenaltyBox = $value;
     }
 
-    public function getIsInPenaltyBox()
+    public function isInPenaltyBox()
     {
         return $this->inPenaltyBox;
+    }
+
+    public function isNotInPenaltyBox()
+    {
+        return !$this->isInPenaltyBox();
     }
 
     public function setIsGettingOutOfPenaltyBox($value)
@@ -58,6 +75,26 @@ class Player
 
     public function getIsGettingOutOfPenaltyBox()
     {
-        return $this->isGettingOutOfPenaltyBox;
+        return $this->roll->isOdd();
+    }
+
+    public function isAllowedToMove()
+    {
+        return $this->isNotInPenaltyBox() || $this->roll->isOdd();
+    }
+
+    public function isNotAllowedToMove()
+    {
+        return $this->isInPenaltyBox() && $this->roll->isEven();
+    }
+
+    public function isAllowedToAnswer()
+    {
+        return $this->isNotInPenaltyBox() || $this->getIsGettingOutOfPenaltyBox();
+    }
+
+    public function isNotAllowedToAnswer()
+    {
+        return $this->isInPenaltyBox() && !$this->getIsGettingOutOfPenaltyBox();
     }
 }
