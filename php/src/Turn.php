@@ -43,14 +43,15 @@ class Turn
 
     private function regularAction()
     {
-        $this->movePlayer($this->roll->getValue());
+        $this->movePlayer();
         $this->game->askQuestion();
     }
 
-    private function movePlayer($roll)
+    private function movePlayer()
     {
-        $currentSpace = $this->player->getPlace();
-        $this->player->moveTo($this->board->findPlaceNumberOfPlacesFromCurrentPlace($currentSpace, $roll));
+        $current = $this->player->getPlace();
+        $place = $this->board->findPlaceNumberOfPlacesFromCurrentPlace($current, $this->roll->getValue());
+        $this->player->moveTo($place);
         $this->view->displayPlayerMoves();
     }
 
