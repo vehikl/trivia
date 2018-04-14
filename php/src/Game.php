@@ -54,7 +54,6 @@ class Game
     {
         $roll = new Roll($value);
         $player = $this->getCurrentPlayer();
-
         $player->setRoll($roll);
 
         echoln("{$player->getName()} is the current player");
@@ -147,11 +146,6 @@ class Game
     {
         $this->getCurrentPlayer()->receivePenalty();
         echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
-    }
-
-    protected function isNotAllowedOutOfPenaltyBox($player, $roll)
-    {
-        return $player->isInPenaltyBox() && $roll->isEven();
     }
 
     private function passTheDice()
