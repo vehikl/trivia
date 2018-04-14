@@ -22,7 +22,7 @@ class GameBoardTest extends TestCase
     {
         $currentPlace = new Place(1, "Taco");
         $numberOfPlaces = 2;
-        $newPlace = $this->board->findPlaceNumberOfPlacesFromCurrentPlace($currentPlace, $numberOfPlaces);
+        $newPlace = $this->board->findPlaceNumberOfPlacesFrom($currentPlace, $numberOfPlaces);
         $this->assertEquals(3, $newPlace->getLocation());
     }
 
@@ -30,7 +30,7 @@ class GameBoardTest extends TestCase
     {
         $currentPlace = new Place(11, "Taco");
         $numberOfPlaces = 4;
-        $newPlace = $this->board->findPlaceNumberOfPlacesFromCurrentPlace($currentPlace, $numberOfPlaces);
+        $newPlace = $this->board->findPlaceNumberOfPlacesFrom($currentPlace, $numberOfPlaces);
         $this->assertEquals(3, $newPlace->getLocation());
     }
 }

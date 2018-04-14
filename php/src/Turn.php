@@ -4,18 +4,22 @@ namespace App;
 
 class Turn
 {
-    private $player;
     private $board;
+    private $questions;
+    private $player;
     private $roll;
+    private $startPlace;
     private $game;
 
     private $view;
 
     public function __construct(Game $game, Roll $roll)
     {
-        $this->player = $game->getCurrentPlayer();
         $this->board = $game->getBoard();
+        $this->questions = $game->getQuestions();
+        $this->player = $game->getCurrentPlayer();
         $this->roll = $roll;
+        $this->startPlace = $this->player->getPlace();
         $this->game = $game;
 
         $this->view = new TurnView($this->player);
@@ -41,15 +45,29 @@ class Turn
     private function regularAction()
     {
         $this->movePlayer();
-        $this->game->askQuestion();
+        $this->askQuestion();
     }
 
     private function movePlayer()
     {
-        $current = $this->player->getPlace();
-        $place = $this->board->findPlaceNumberOfPlacesFromCurrentPlace($current, $this->roll->getValue());
-        $this->player->moveTo($place);
+        $this->player->moveTo($this->getEndPlace());
         $this->view->displayPlayerMoves();
+    }
+
+    private function askQuestion()
+    {
+        $this->view->displayCategory($this->getCategory());
+        $this->view->displayQuestion($this->questions->askFrom($this->getCategory()));
+    }
+
+    private function getCategory()
+    {
+        return $this->getEndPlace()->getCategory();
+    }
+
+    private function getEndPlace()
+    {
+        return $this->board->findPlaceNumberOfPlacesFrom($this->startPlace, $this->roll->getValue());
     }
 
     private function isPlayerGettingOutOfPenaltyBox()

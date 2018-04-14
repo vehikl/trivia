@@ -41,17 +41,6 @@ class Game
         $this->turn->action();
     }
 
-    public function askQuestion()
-    {
-        $this->displayCategory();
-        $this->displayQuestion($this->questions->askFrom($this->currentCategory()));
-    }
-
-    private function currentCategory()
-    {
-        return $this->getCurrentPlayer()->getPlace()->getCategory();
-    }
-
     public function wasCorrectlyAnswered()
     {
         return $this->correctAnswer();
@@ -111,6 +100,11 @@ class Game
         return $this->board;
     }
 
+    public function getQuestions()
+    {
+        return $this->questions;
+    }
+
     private function useCorrent()
     {
         return $this->getCurrentPlayer()->isNotInPenaltyBox();
@@ -120,16 +114,6 @@ class Game
     {
         $this->view->echoln("{$playerName} was added");
         $this->view->echoln("They are player number {$this->howManyPlayers()}");
-    }
-
-    protected function displayCategory()
-    {
-        $this->view->echoln("The category is {$this->currentCategory()}");
-    }
-
-    protected function displayQuestion($question)
-    {
-        $this->view->echoln($question);
     }
 
     protected function displayCorrectAnswer($withTypo)

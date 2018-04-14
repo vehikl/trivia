@@ -36,4 +36,14 @@ class TurnView
     {
         $this->echoln("{$this->player->getName()}'s new location is {$this->player->getPlace()->getLocation()}");
     }
+
+    public function displayCategory($category)
+    {
+        $this->echoln("The category is {$category}");
+    }
+
+    public function displayQuestion($question)
+    {
+        $this->echoln($question);
+    }
 }

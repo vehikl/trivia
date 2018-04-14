@@ -24,7 +24,7 @@ class GameBoard
         return $this->findPlace(0);
     }
 
-    public function findPlaceNumberOfPlacesFromCurrentPlace(Place $currentPlace, $numberOfPlacesToMove)
+    public function findPlaceNumberOfPlacesFrom(Place $currentPlace, $numberOfPlacesToMove)
     {
         $location = $currentPlace->getLocation() + $numberOfPlacesToMove;
         $location = $this->placeLoops($location) ? $location - $this->getTotalNumberOfPlaces() : $location;
