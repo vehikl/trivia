@@ -12,14 +12,16 @@ class Game
 
     private $view;
 
-    const QUESTION_CATEGORIES = ["Pop", "Science", "Sports", "Rock"];
+    const CATEGORIES = ["Pop", "Science", "Sports", "Rock"];
     const QUESTIONS_PER_CATEGORY = 50;
+    const NUMBER_OF_PLACES = 12;
 
     const GOLD_COINS_TO_WIN = 6;
 
     public function __construct()
     {
-        $this->questions = new GameQuestions(self::QUESTION_CATEGORIES, self::QUESTIONS_PER_CATEGORY);
+        $this->board = new GameBoard(self::CATEGORIES, self::NUMBER_OF_PLACES);
+        $this->questions = new GameQuestions(self::CATEGORIES, self::QUESTIONS_PER_CATEGORY);
         $this->view = new View($this);
     }
 
@@ -37,7 +39,7 @@ class Game
     public function roll($rolledNumber)
     {
         $this->turn = new Turn($this, new Roll($rolledNumber));
-        $this->turn->move();
+        $this->turn->action();
     }
 
     public function askQuestion()
@@ -119,6 +121,11 @@ class Game
     public function getCurrentPlayer()
     {
         return $this->players[$this->currentPlayerId];
+    }
+
+    public function getBoard()
+    {
+        return $this->board;
     }
 
     private function useCorrent()

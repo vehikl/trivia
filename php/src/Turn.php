@@ -5,6 +5,7 @@ namespace App;
 class Turn
 {
     private $player;
+    private $board;
     private $roll;
     private $game;
 
@@ -16,13 +17,14 @@ class Turn
     public function __construct(Game $game, Roll $roll)
     {
         $this->player = $game->getCurrentPlayer();
+        $this->board = $game->getBoard();
         $this->roll = $roll;
         $this->game = $game;
 
         $this->view = new TurnView($this->player);
     }
 
-    public function move()
+    public function action()
     {
         $this->player->setRoll($this->roll);
         $this->view->displayPlayerRolls($this->roll->getValue());
@@ -39,11 +41,15 @@ class Turn
         $this->game->askQuestion();
     }
 
+    private function isPlayerAllowedToMove()
+    {
+        $this->isNotInPenaltyBox() || $this->roll->isOdd();
+    }
+
     private function movePlayer($roll)
     {
-        $newPlace = $this->player->getSpace() + $roll;
-        $newPlace = self::LAST_PLACE >= $newPlace ? $newPlace : $newPlace - self::TOTAL_PLACES;
-        $this->player->setSpace($newPlace);
+        $currentSpace = $this->player->getSpace();
+        $this->player->setSpace($this->board->findPlaceNumberOfPlacesFromCurrentPlace($currentSpace, $roll));
         $this->view->displayPlayerMoves();
     }
 }
