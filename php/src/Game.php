@@ -117,8 +117,7 @@ class Game
             $this->givePlayerGoldCoin();
         }
 
-        $this->passTheDice();
-        return $this->gameIsNotOver();
+        return $this->passTheDice();
     }
 
     public function wrongAnswer()
@@ -126,8 +125,7 @@ class Game
         $this->displayWrongAnswer();
         $this->sendPlayerToPenaltyBox();
 
-        $this->passTheDice();
-        return $this->gameIsNotOver();
+        return $this->passTheDice();
     }
 
     private function givePlayerGoldCoin()
@@ -146,6 +144,7 @@ class Game
     {
         $nextId = $this->currentPlayerId + 1;
         $this->currentPlayerId = $nextId < $this->howManyPlayers() ? $nextId : 0;
+        return $this->gameIsNotOver();
     }
 
     private function gameIsNotOver()
