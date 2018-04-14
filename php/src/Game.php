@@ -2,9 +2,10 @@
 
 class Game
 {
-    private $players;
+    private $players = [];
     private $currentPlayerId = 0;
 
+    private $questions = [];
     private $popQuestions;
     private $scienceQuestions;
     private $sportsQuestions;
@@ -19,20 +20,28 @@ class Game
 
     public function __construct()
     {
+        $this->initializeQuestions();
+    }
 
-        $this->players = array();
+    private function initializeQuestions()
+    {
+        $numbers = range(0, self::QUESTIONS_PER_CATEGORY - 1);
 
-        $this->popQuestions = array();
-        $this->scienceQuestions = array();
-        $this->sportsQuestions = array();
-        $this->rockQuestions = array();
-
-        for ($i = 0; $i < self::QUESTIONS_PER_CATEGORY; $i++) {
-            array_push($this->popQuestions, "Pop Question " . $i);
-            array_push($this->scienceQuestions, "Science Question " . $i);
-            array_push($this->sportsQuestions, "Sports Question " . $i);
-            array_push($this->rockQuestions, "Rock Question " . $i);
+        foreach (["Pop", "Science", "Sports", "Rock"] as $category) {
+            $this->initializeCategoryQuestions($category, $numbers);
         }
+    }
+
+    private function initializeCategoryQuestions($category, $numbers)
+    {
+        $this->questions[strtolower($category)] = array_map(function ($number) use ($category) {
+            return $this->createQuestion($category, $number);
+        }, $numbers);
+    }
+
+    private function createQuestion($category, $number)
+    {
+        return "{$category} Question {$number}";
     }
 
     public function add($playerName)
@@ -83,58 +92,25 @@ class Game
 
     private function askQuestion()
     {
-        if ($this->currentCategory() == "Pop") {
-            echoln(array_shift($this->popQuestions));
-        }
-
-        if ($this->currentCategory() == "Science") {
-            echoln(array_shift($this->scienceQuestions));
-        }
-
-        if ($this->currentCategory() == "Sports") {
-            echoln(array_shift($this->sportsQuestions));
-        }
-
-        if ($this->currentCategory() == "Rock") {
-            echoln(array_shift($this->rockQuestions));
-        }
+        $category = strtolower($this->currentCategory());
+        echoln(array_shift($this->questions[$category]));
     }
 
     private function currentCategory()
     {
-        if ($this->getCurrentPlayer()->getSpace() == 0) {
+        $popPlaces = [0, 4, 8];
+        $sciencePlaces = [1, 5, 9];
+        $sportsPlaces = [2, 6, 10];
+
+        if (in_array($this->getCurrentPlayer()->getSpace(), $popPlaces)) {
             return "Pop";
         }
 
-        if ($this->getCurrentPlayer()->getSpace() == 4) {
-            return "Pop";
-        }
-
-        if ($this->getCurrentPlayer()->getSpace() == 8) {
-            return "Pop";
-        }
-
-        if ($this->getCurrentPlayer()->getSpace() == 1) {
+        if (in_array($this->getCurrentPlayer()->getSpace(), $sciencePlaces)) {
             return "Science";
         }
 
-        if ($this->getCurrentPlayer()->getSpace() == 5) {
-            return "Science";
-        }
-
-        if ($this->getCurrentPlayer()->getSpace() == 9) {
-            return "Science";
-        }
-
-        if ($this->getCurrentPlayer()->getSpace() == 2) {
-            return "Sports";
-        }
-
-        if ($this->getCurrentPlayer()->getSpace() == 6) {
-            return "Sports";
-        }
-
-        if ($this->getCurrentPlayer()->getSpace() == 10) {
+        if (in_array($this->getCurrentPlayer()->getSpace(), $sportsPlaces)) {
             return "Sports";
         }
 
