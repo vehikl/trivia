@@ -158,12 +158,7 @@ class Game
 
     private function gameIsNotOver()
     {
-        return !$this->gameIsOver();
-    }
-
-    private function gameIsOver()
-    {
-        return array_reduce($this->players, function ($result, $player) {
+        return !array_reduce($this->players, function ($result, $player) {
             return $result || $player->getCoins() == self::GOLD_COINS_TO_WIN;
         }, false);
     }
