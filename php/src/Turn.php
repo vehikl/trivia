@@ -25,7 +25,6 @@ class Turn
 
     public function action()
     {
-        $this->player->setRoll($this->roll);
         $this->view->displayPlayerRolls($this->roll->getValue());
         $this->player->isInPenaltyBox() ? $this->penaltyAction() : $this->regularAction();
     }
@@ -60,7 +59,7 @@ class Turn
 
     public function correctAnswer()
     {
-        if ($this->player->isAllowedToAnswer()) {
+        if ($this->isPlayerAllowedToAnswer()) {
             $this->view->displayCorrectAnswer($this->useCorrent());
             $this->givePlayerGoldCoin();
         }
@@ -94,6 +93,11 @@ class Turn
         return $this->board->findPlaceNumberOfPlacesFrom($this->startPlace, $this->roll->getValue());
     }
 
+    private function isPlayerAllowedToAnswer()
+    {
+        return !$this->player->isInPenaltyBox() || $this->isPlayerGettingOutOfPenaltyBox();
+    }
+
     private function isPlayerGettingOutOfPenaltyBox()
     {
         return $this->roll->isOdd();
@@ -101,6 +105,6 @@ class Turn
 
     private function useCorrent()
     {
-        return $this->player->isNotInPenaltyBox();
+        return !$this->player->isInPenaltyBox();
     }
 }
