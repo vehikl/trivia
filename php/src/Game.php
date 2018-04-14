@@ -112,8 +112,7 @@ class Game
     public function correctAnswer()
     {
         if ($this->getCurrentPlayer()->isAllowedToAnswer()) {
-            $withTypo = $this->getCurrentPlayer()->isNotInPenaltyBox();
-            $this->displayCorrectAnswer($withTypo);
+            $this->displayCorrectAnswer($this->useCorrent());
             $this->givePlayerGoldCoin();
         }
 
@@ -157,6 +156,11 @@ class Game
     private function getCurrentPlayer()
     {
         return $this->players[$this->currentPlayerId];
+    }
+
+    private function useCorrent()
+    {
+        return $this->getCurrentPlayer()->isNotInPenaltyBox();
     }
 
     protected function displayPlayerIsAdded($playerName)
