@@ -73,8 +73,7 @@ class Game
         $newPlace = $this->getCurrentPlayer()->getSpace() + $roll;
         $newPlace = self::LAST_PLACE >= $newPlace ? $newPlace : $newPlace - self::TOTAL_PLACES;
         $this->getCurrentPlayer()->setSpace($newPlace);
-
-        echoln("{$this->getCurrentPlayer()->getName()}'s new location is {$this->getCurrentPlayer()->getSpace()}");
+        $this->displayPlayerMoves();
     }
 
     private function askQuestion()
@@ -171,6 +170,11 @@ class Game
     {
         echoln("{$this->getCurrentPlayer()->getName()} is the current player");
         echoln("They have rolled a {$rolledNumber}");
+    }
+
+    protected function displayPlayerMoves()
+    {
+        echoln("{$this->getCurrentPlayer()->getName()}'s new location is {$this->getCurrentPlayer()->getSpace()}");
     }
 
     protected function displayPlayerIsSentToPenaltyBox()
