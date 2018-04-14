@@ -58,21 +58,24 @@ class Game
         echoln("{$this->getCurrentPlayer()->getName()} is the current player");
         echoln("They have rolled a {$roll->getValue()}");
 
-        if ($this->isAllowedToMove($this->getCurrentPlayer(), $roll)) {
-            $this->getCurrentPlayer()->setIsGettingOutOfPenaltyBox(true);
-            echoln("{$this->getCurrentPlayer()->getName()} is getting out of the penalty box");
-            $this->movePlayer($roll->getValue());
-        } else if ($this->getCurrentPlayer()->getIsInPenaltyBox()) {
+        if ($this->isNotAllowedOutOfPenaltyBox($this->getCurrentPlayer(), $roll)) {
             echoln("{$this->getCurrentPlayer()->getName()} is not getting out of the penalty box");
             $this->getCurrentPlayer()->setIsGettingOutOfPenaltyBox(false);
-        } else {
-            $this->movePlayer($roll->getValue());
+            return;
         }
+
+        if ($this->getCurrentPlayer()->getIsInPenaltyBox()) {
+            $this->getCurrentPlayer()->setIsGettingOutOfPenaltyBox(true);
+            echoln("{$this->getCurrentPlayer()->getName()} is getting out of the penalty box");
+        }
+
+        $this->movePlayer($roll->getValue());
+        $this->askQuestion();
     }
 
-    protected function isAllowedToMove($player, $roll)
+    protected function isNotAllowedOutOfPenaltyBox($player, $roll)
     {
-        return $player->getIsInPenaltyBox() && $roll->isOdd();
+        return $player->getIsInPenaltyBox() && $roll->isEven();
     }
 
     private function movePlayer($roll)
@@ -83,12 +86,11 @@ class Game
         }
 
         echoln("{$this->getCurrentPlayer()->getName()}'s new location is {$this->getCurrentPlayer()->getSpace()}");
-        echoln("The category is {$this->currentCategory()}");
-        $this->askQuestion();
     }
 
     private function askQuestion()
     {
+        echoln("The category is {$this->currentCategory()}");
         $category = strtolower($this->currentCategory());
         echoln(array_shift($this->questions[$category]));
     }
