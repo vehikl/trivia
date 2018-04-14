@@ -68,12 +68,7 @@ class Player
         return !$this->isInPenaltyBox();
     }
 
-    public function setIsGettingOutOfPenaltyBox($value)
-    {
-        $this->isGettingOutOfPenaltyBox = $value;
-    }
-
-    public function getIsGettingOutOfPenaltyBox()
+    public function isGettingOutOfPenaltyBox()
     {
         return $this->roll->isOdd();
     }
@@ -90,11 +85,11 @@ class Player
 
     public function isAllowedToAnswer()
     {
-        return $this->isNotInPenaltyBox() || $this->getIsGettingOutOfPenaltyBox();
+        return $this->isNotInPenaltyBox() || $this->isGettingOutOfPenaltyBox();
     }
 
     public function isNotAllowedToAnswer()
     {
-        return $this->isInPenaltyBox() && !$this->getIsGettingOutOfPenaltyBox();
+        return $this->isInPenaltyBox() && !$this->isGettingOutOfPenaltyBox();
     }
 }
