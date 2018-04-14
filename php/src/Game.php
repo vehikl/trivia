@@ -21,18 +21,16 @@ class Game
 
     private function initializeQuestions()
     {
-        $numbers = range(0, self::QUESTIONS_PER_CATEGORY - 1);
-
         foreach (["Pop", "Science", "Sports", "Rock"] as $category) {
-            $this->initializeCategoryQuestions($category, $numbers);
+            $this->initializeCategoryQuestions($category);
         }
     }
 
-    private function initializeCategoryQuestions($category, $numbers)
+    private function initializeCategoryQuestions($category)
     {
         $this->questions[strtolower($category)] = array_map(function ($number) use ($category) {
             return $this->createQuestion($category, $number);
-        }, $numbers);
+        }, range(0, self::QUESTIONS_PER_CATEGORY - 1));
     }
 
     private function createQuestion($category, $number)
