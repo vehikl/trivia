@@ -123,7 +123,7 @@ class Game
 
     public function wrongAnswer()
     {
-        echoln("Question was incorrectly answered");
+        $this->displayWrongAnswer();
         $this->sendPlayerToPenaltyBox();
 
         $this->passTheDice();
@@ -190,6 +190,11 @@ class Game
     protected function displayCorrectAnswer($withTypo)
     {
         echoln("Answer was " . ($withTypo ? 'corrent' : 'correct') . "!!!!");
+    }
+
+    protected function displayWrongAnswer()
+    {
+        echoln("Question was incorrectly answered");
     }
 
     protected function displayPlayerIsSentToPenaltyBox()
