@@ -78,7 +78,7 @@ class Game
 
     private function askQuestion()
     {
-        echoln("The category is {$this->currentCategory()}");
+        $this->displayCategory();
         $category = strtolower($this->currentCategory());
         echoln(array_shift($this->questions[$category]));
     }
@@ -175,6 +175,11 @@ class Game
     protected function displayPlayerMoves()
     {
         echoln("{$this->getCurrentPlayer()->getName()}'s new location is {$this->getCurrentPlayer()->getSpace()}");
+    }
+
+    protected function displayCategory()
+    {
+        echoln("The category is {$this->currentCategory()}");
     }
 
     protected function displayPlayerIsSentToPenaltyBox()
