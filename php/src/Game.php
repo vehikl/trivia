@@ -54,9 +54,7 @@ class Game
         $roll = new Roll($value);
         $player = $this->getCurrentPlayer();
         $player->setRoll($roll);
-
-        echoln("{$player->getName()} is the current player");
-        echoln("They have rolled a {$roll->getValue()}");
+        $this->displayPlayerRoll($roll->getValue());
 
         if ($player->isNotAllowedToMove()) {
             echoln("{$player->getName()} is not getting out of the penalty box");
@@ -168,6 +166,12 @@ class Game
     {
         echoln("{$name} was added");
         echoln("They are player number {$this->howManyPlayers()}");
+    }
+
+    protected function displayPlayerRoll($rolledNumber)
+    {
+        echoln("{$this->getCurrentPlayer()->getName()} is the current player");
+        echoln("They have rolled a {$rolledNumber}");
     }
 
     protected function displayPlayerReceivedGoldCoin()
