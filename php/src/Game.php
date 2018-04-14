@@ -6,10 +6,6 @@ class Game
     private $currentPlayerId = 0;
 
     private $questions = [];
-    private $popQuestions;
-    private $scienceQuestions;
-    private $sportsQuestions;
-    private $rockQuestions;
 
     const QUESTIONS_PER_CATEGORY = 50;
 
