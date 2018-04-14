@@ -112,8 +112,8 @@ class Game
     public function correctAnswer()
     {
         if ($this->getCurrentPlayer()->isAllowedToAnswer()) {
-            $correct = $this->getCurrentPlayer()->isNotInPenaltyBox() ? 'corrent' : 'correct';
-            echoln("Answer was {$correct}!!!!");
+            $withTypo = $this->getCurrentPlayer()->isNotInPenaltyBox();
+            $this->displayCorrectAnswer($withTypo);
             $this->givePlayerGoldCoin();
         }
 
@@ -185,6 +185,11 @@ class Game
     protected function displayQuestion($question)
     {
         echoln($question);
+    }
+
+    protected function displayCorrectAnswer($withTypo)
+    {
+        echoln("Answer was " . ($withTypo ? 'corrent' : 'correct') . "!!!!");
     }
 
     protected function displayPlayerIsSentToPenaltyBox()
