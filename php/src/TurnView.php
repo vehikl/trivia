@@ -2,18 +2,13 @@
 
 namespace App;
 
-class TurnView
+class TurnView extends View
 {
     private $player;
 
     public function __construct(Player $player)
     {
         $this->player = $player;
-    }
-
-    public function echoln($string)
-    {
-        echo $string . "\n";
     }
 
     public function displayPlayerRolls($rolledNumber)

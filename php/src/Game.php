@@ -6,8 +6,8 @@ class Game
 {
     private $players = [];
     private $currentPlayerId = 0;
+    private $board;
     private $questions;
-
     private $turn;
 
     private $view;
@@ -21,13 +21,13 @@ class Game
     {
         $this->board = new GameBoard(self::CATEGORIES, self::NUMBER_OF_PLACES);
         $this->questions = new GameQuestions(self::CATEGORIES, self::QUESTIONS_PER_CATEGORY);
-        $this->view = new View($this);
+        $this->view = new GameView();
     }
 
     public function add($playerName)
     {
         $this->players[] = new Player($playerName, $this->board->firstPlace());
-        $this->displayPlayerIsAdded($playerName);
+        $this->view->displayPlayerIsAdded($playerName, $this->howManyPlayers());
     }
 
     private function howManyPlayers()
@@ -80,11 +80,5 @@ class Game
     public function getQuestions()
     {
         return $this->questions;
-    }
-
-    protected function displayPlayerIsAdded($playerName)
-    {
-        $this->view->echoln("{$playerName} was added");
-        $this->view->echoln("They are player number {$this->howManyPlayers()}");
     }
 }
