@@ -52,26 +52,27 @@ class Game
         return count($this->players);
     }
 
-    public function roll($roll)
+    public function roll($value)
     {
+        $roll = new Roll($value);
         echoln("{$this->getCurrentPlayer()->getName()} is the current player");
-        echoln("They have rolled a {$roll}");
+        echoln("They have rolled a {$roll->getValue()}");
 
-        if ($this->getCurrentPlayer()->getIsInPenaltyBox() && $this->rolledOdds($roll)) {
+        if ($this->isAllowedToMove($this->getCurrentPlayer(), $roll)) {
             $this->getCurrentPlayer()->setIsGettingOutOfPenaltyBox(true);
             echoln("{$this->getCurrentPlayer()->getName()} is getting out of the penalty box");
-            $this->movePlayer($roll);
+            $this->movePlayer($roll->getValue());
         } else if ($this->getCurrentPlayer()->getIsInPenaltyBox()) {
             echoln("{$this->getCurrentPlayer()->getName()} is not getting out of the penalty box");
             $this->getCurrentPlayer()->setIsGettingOutOfPenaltyBox(false);
         } else {
-            $this->movePlayer($roll);
+            $this->movePlayer($roll->getValue());
         }
     }
 
-    private function rolledOdds($roll)
+    protected function isAllowedToMove($player, $roll)
     {
-        return $roll % 2 != 0;
+        return $player->getIsInPenaltyBox() && $roll->isOdd();
     }
 
     private function movePlayer($roll)
@@ -120,7 +121,7 @@ class Game
             return $this->givePlayerGoldCoin();
         } elseif ($this->getCurrentPlayer()->getIsInPenaltyBox()) {
             $this->passTheDice();
-            return $gameIsNotOver = true;
+            return $this->gameIsNotOver();
         } else {
             echoln("Answer was corrent!!!!");
             return $this->givePlayerGoldCoin();
@@ -131,11 +132,9 @@ class Game
     {
         $this->getCurrentPlayer()->addCoin();
         echoln("{$this->getCurrentPlayer()->getName()} now has {$this->getCurrentPlayer()->getCoins()} Gold Coins.");
-
-        $gameIsNotOver = $this->didPlayerWin();
         $this->passTheDice();
 
-        return $gameIsNotOver;
+        return $this->gameIsNotOver();
     }
 
     public function wrongAnswer()
@@ -143,10 +142,9 @@ class Game
         echoln("Question was incorrectly answered");
         echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
         $this->getCurrentPlayer()->setIsInPenaltyBox(true);
-
         $this->passTheDice();
 
-        return $gameIsNotOver = true;
+        return $this->gameIsNotOver();
     }
 
     private function passTheDice()
@@ -157,9 +155,16 @@ class Game
         }
     }
 
-    private function didPlayerWin()
+    private function gameIsNotOver()
     {
-        return !($this->getCurrentPlayer()->getCoins() == self::GOLD_COINS_TO_WIN);
+        return !$this->gameIsOver();
+    }
+
+    private function gameIsOver()
+    {
+        return array_reduce($this->players, function ($result, $player) {
+            return $result || $player->getCoins() == self::GOLD_COINS_TO_WIN;
+        }, false);
     }
 
     private function getCurrentPlayer()
