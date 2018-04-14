@@ -150,10 +150,8 @@ class Game
 
     private function passTheDice()
     {
-        $this->currentPlayerId++;
-        if ($this->currentPlayerId == count($this->players)) {
-            $this->currentPlayerId = 0;
-        }
+        $nextId = $this->currentPlayerId + 1;
+        $this->currentPlayerId = $nextId < $this->howManyPlayers() ? $nextId : 0;
     }
 
     private function gameIsNotOver()
