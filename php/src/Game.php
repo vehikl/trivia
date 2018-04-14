@@ -41,7 +41,7 @@ class Game
     public function add($playerName)
     {
         $this->players[] = new Player($playerName);
-        $this->displayPlayerWasAdded($playerName);
+        $this->displayPlayerIsAdded($playerName);
     }
 
     private function howManyPlayers()
@@ -54,7 +54,7 @@ class Game
         $roll = new Roll($value);
         $player = $this->getCurrentPlayer();
         $player->setRoll($roll);
-        $this->displayPlayerRoll($roll->getValue());
+        $this->displayPlayerRolls($roll->getValue());
 
         if ($player->isNotAllowedToMove()) {
             return $this->displayPlayerStaysInPenaltyBox();
@@ -134,13 +134,13 @@ class Game
     private function givePlayerGoldCoin()
     {
         $this->getCurrentPlayer()->addCoin();
-        $this->displayPlayerReceivedGoldCoin();
+        $this->displayPlayerReceivesGoldCoin();
     }
 
     private function sendPlayerToPenaltyBox()
     {
         $this->getCurrentPlayer()->receivePenalty();
-        $this->displayPlayerSentToPenaltyBox();
+        $this->displayPlayerIsSentToPenaltyBox();
     }
 
     private function passTheDice()
@@ -161,16 +161,21 @@ class Game
         return $this->players[$this->currentPlayerId];
     }
 
-    protected function displayPlayerWasAdded($name)
+    protected function displayPlayerIsAdded($playerName)
     {
-        echoln("{$name} was added");
+        echoln("{$playerName} was added");
         echoln("They are player number {$this->howManyPlayers()}");
     }
 
-    protected function displayPlayerRoll($rolledNumber)
+    protected function displayPlayerRolls($rolledNumber)
     {
         echoln("{$this->getCurrentPlayer()->getName()} is the current player");
         echoln("They have rolled a {$rolledNumber}");
+    }
+
+    protected function displayPlayerIsSentToPenaltyBox()
+    {
+        echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
     }
 
     protected function displayPlayerStaysInPenaltyBox()
@@ -183,13 +188,8 @@ class Game
         echoln("{$this->getCurrentPlayer()->getName()} is getting out of the penalty box");
     }
 
-    protected function displayPlayerReceivedGoldCoin()
+    protected function displayPlayerReceivesGoldCoin()
     {
         echoln("{$this->getCurrentPlayer()->getName()} now has {$this->getCurrentPlayer()->getCoins()} Gold Coins.");
-    }
-
-    protected function displayPlayerSentToPenaltyBox()
-    {
-        echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
     }
 }
