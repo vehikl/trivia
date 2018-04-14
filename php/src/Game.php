@@ -41,8 +41,7 @@ class Game
     public function add($playerName)
     {
         $this->players[] = new Player($playerName);
-        echoln("{$playerName} was added");
-        echoln("They are player number {$this->howManyPlayers()}");
+        $this->displayPlayerWasAdded($playerName);
     }
 
     private function howManyPlayers()
@@ -163,6 +162,12 @@ class Game
     private function getCurrentPlayer()
     {
         return $this->players[$this->currentPlayerId];
+    }
+
+    protected function displayPlayerWasAdded($name)
+    {
+        echoln("{$name} was added");
+        echoln("They are player number {$this->howManyPlayers()}");
     }
 
     protected function displayPlayerReceivedGoldCoin()
