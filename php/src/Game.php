@@ -74,10 +74,9 @@ class Game
 
     private function movePlayer($roll)
     {
-        $this->getCurrentPlayer()->setSpace($this->getCurrentPlayer()->getSpace() + $roll);
-        if ($this->getCurrentPlayer()->getSpace() > self::LAST_PLACE) {
-            $this->getCurrentPlayer()->setSpace($this->getCurrentPlayer()->getSpace() - self::TOTAL_PLACES);
-        }
+        $newPlace = $this->getCurrentPlayer()->getSpace() + $roll;
+        $newPlace = self::LAST_PLACE >= $newPlace ? $newPlace : $newPlace - self::TOTAL_PLACES;
+        $this->getCurrentPlayer()->setSpace($newPlace);
 
         echoln("{$this->getCurrentPlayer()->getName()}'s new location is {$this->getCurrentPlayer()->getSpace()}");
     }
