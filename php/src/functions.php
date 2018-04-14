@@ -2,11 +2,6 @@
 
 use App\Game;
 
-function echoln($string)
-{
-    echo $string . "\n";
-}
-
 function playGame($seed, $outputFile)
 {
     srand($seed);
@@ -24,7 +19,6 @@ function playGame($seed, $outputFile)
     $aGame->add("Sue");
 
     do {
-
         $aGame->roll(rand(0, 5) + 1);
 
         if (rand(0, 9) == 7) {
@@ -32,7 +26,6 @@ function playGame($seed, $outputFile)
         } else {
             $notAWinner = $aGame->wasCorrectlyAnswered();
         }
-
     } while ($notAWinner);
 
     ob_end_flush();

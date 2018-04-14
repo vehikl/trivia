@@ -6,19 +6,19 @@ class Game
 {
     private $players = [];
     private $currentPlayerId = 0;
-
     private $questions = [];
 
-    const QUESTIONS_PER_CATEGORY = 50;
+    private $view;
 
+    const QUESTIONS_PER_CATEGORY = 50;
     const TOTAL_PLACES = 12;
     const LAST_PLACE = 11;
-
     const GOLD_COINS_TO_WIN = 6;
 
     public function __construct()
     {
         $this->initializeQuestions();
+        $this->view = new View;
     }
 
     private function initializeQuestions()
@@ -167,58 +167,58 @@ class Game
 
     protected function displayPlayerIsAdded($playerName)
     {
-        echoln("{$playerName} was added");
-        echoln("They are player number {$this->howManyPlayers()}");
+        $this->view->echoln("{$playerName} was added");
+        $this->view->echoln("They are player number {$this->howManyPlayers()}");
     }
 
     protected function displayPlayerRolls($rolledNumber)
     {
-        echoln("{$this->getCurrentPlayer()->getName()} is the current player");
-        echoln("They have rolled a {$rolledNumber}");
+        $this->view->echoln("{$this->getCurrentPlayer()->getName()} is the current player");
+        $this->view->echoln("They have rolled a {$rolledNumber}");
     }
 
     protected function displayPlayerMoves()
     {
-        echoln("{$this->getCurrentPlayer()->getName()}'s new location is {$this->getCurrentPlayer()->getSpace()}");
+        $this->view->echoln("{$this->getCurrentPlayer()->getName()}'s new location is {$this->getCurrentPlayer()->getSpace()}");
     }
 
     protected function displayCategory()
     {
-        echoln("The category is {$this->currentCategory()}");
+        $this->view->echoln("The category is {$this->currentCategory()}");
     }
 
     protected function displayQuestion($question)
     {
-        echoln($question);
+        $this->view->echoln($question);
     }
 
     protected function displayCorrectAnswer($withTypo)
     {
-        echoln("Answer was " . ($withTypo ? 'corrent' : 'correct') . "!!!!");
+        $this->view->echoln("Answer was " . ($withTypo ? 'corrent' : 'correct') . "!!!!");
     }
 
     protected function displayWrongAnswer()
     {
-        echoln("Question was incorrectly answered");
+        $this->view->echoln("Question was incorrectly answered");
     }
 
     protected function displayPlayerIsSentToPenaltyBox()
     {
-        echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
+        $this->view->echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
     }
 
     protected function displayPlayerStaysInPenaltyBox()
     {
-        echoln("{$this->getCurrentPlayer()->getName()} is not getting out of the penalty box");
+        $this->view->echoln("{$this->getCurrentPlayer()->getName()} is not getting out of the penalty box");
     }
 
     protected function displayPlayerGetsOutOfPenaltyBox()
     {
-        echoln("{$this->getCurrentPlayer()->getName()} is getting out of the penalty box");
+        $this->view->echoln("{$this->getCurrentPlayer()->getName()} is getting out of the penalty box");
     }
 
     protected function displayPlayerReceivesGoldCoin()
     {
-        echoln("{$this->getCurrentPlayer()->getName()} now has {$this->getCurrentPlayer()->getCoins()} Gold Coins.");
+        $this->view->echoln("{$this->getCurrentPlayer()->getName()} now has {$this->getCurrentPlayer()->getCoins()} Gold Coins.");
     }
 }
