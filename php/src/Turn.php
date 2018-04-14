@@ -10,6 +10,9 @@ class Turn
 
     private $view;
 
+    const TOTAL_PLACES = 12;
+    const LAST_PLACE = 11;
+
     public function __construct(Game $game, Roll $roll)
     {
         $this->player = $game->getCurrentPlayer();
@@ -32,7 +35,15 @@ class Turn
             $this->view->displayPlayerGetsOutOfPenaltyBox();
         }
 
-        $this->game->movePlayer($this->roll->getValue());
+        $this->movePlayer($this->roll->getValue());
         $this->game->askQuestion();
+    }
+
+    private function movePlayer($roll)
+    {
+        $newPlace = $this->player->getSpace() + $roll;
+        $newPlace = self::LAST_PLACE >= $newPlace ? $newPlace : $newPlace - self::TOTAL_PLACES;
+        $this->player->setSpace($newPlace);
+        $this->view->displayPlayerMoves();
     }
 }

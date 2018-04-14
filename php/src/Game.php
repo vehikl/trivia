@@ -13,8 +13,6 @@ class Game
     private $view;
 
     const QUESTIONS_PER_CATEGORY = 50;
-    const TOTAL_PLACES = 12;
-    const LAST_PLACE = 11;
     const GOLD_COINS_TO_WIN = 6;
 
     public function __construct()
@@ -57,14 +55,6 @@ class Game
     {
         $this->turn = new Turn($this, new Roll($rolledNumber));
         $this->turn->move();
-    }
-
-    public function movePlayer($roll)
-    {
-        $newPlace = $this->getCurrentPlayer()->getSpace() + $roll;
-        $newPlace = self::LAST_PLACE >= $newPlace ? $newPlace : $newPlace - self::TOTAL_PLACES;
-        $this->getCurrentPlayer()->setSpace($newPlace);
-        $this->displayPlayerMoves();
     }
 
     public function askQuestion()
@@ -158,11 +148,6 @@ class Game
     {
         $this->view->echoln("{$playerName} was added");
         $this->view->echoln("They are player number {$this->howManyPlayers()}");
-    }
-
-    protected function displayPlayerMoves()
-    {
-        $this->view->echoln("{$this->getCurrentPlayer()->getName()}'s new location is {$this->getCurrentPlayer()->getSpace()}");
     }
 
     protected function displayCategory()

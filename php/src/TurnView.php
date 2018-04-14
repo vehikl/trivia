@@ -31,4 +31,9 @@ class TurnView
     {
         $this->echoln("{$this->player->getName()} is getting out of the penalty box");
     }
+
+    public function displayPlayerMoves()
+    {
+        $this->echoln("{$this->player->getName()}'s new location is {$this->player->getSpace()}");
+    }
 }
