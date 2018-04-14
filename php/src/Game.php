@@ -6,38 +6,21 @@ class Game
 {
     private $players = [];
     private $currentPlayerId = 0;
-    private $questions = [];
+    private $questions;
 
     private $turn;
 
     private $view;
 
+    const QUESTION_CATEGORIES = ["Pop", "Science", "Sports", "Rock"];
     const QUESTIONS_PER_CATEGORY = 50;
+
     const GOLD_COINS_TO_WIN = 6;
 
     public function __construct()
     {
-        $this->initializeQuestions();
+        $this->questions = new GameQuestions(self::QUESTION_CATEGORIES, self::QUESTIONS_PER_CATEGORY);
         $this->view = new View($this);
-    }
-
-    private function initializeQuestions()
-    {
-        foreach (["Pop", "Science", "Sports", "Rock"] as $category) {
-            $this->initializeCategoryQuestions($category);
-        }
-    }
-
-    private function initializeCategoryQuestions($category)
-    {
-        $this->questions[strtolower($category)] = array_map(function ($number) use ($category) {
-            return $this->createQuestion($category, $number);
-        }, range(0, self::QUESTIONS_PER_CATEGORY - 1));
-    }
-
-    private function createQuestion($category, $number)
-    {
-        return "{$category} Question {$number}";
     }
 
     public function add($playerName)
@@ -60,8 +43,7 @@ class Game
     public function askQuestion()
     {
         $this->displayCategory();
-        $category = strtolower($this->currentCategory());
-        $this->displayQuestion(array_shift($this->questions[$category]));
+        $this->displayQuestion($this->questions->askFrom($this->currentCategory()));
     }
 
     private function currentCategory()
