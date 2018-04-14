@@ -24,15 +24,25 @@ class Game
         $this->view = new GameView();
     }
 
+    public function getCurrentPlayer()
+    {
+        return $this->players[$this->currentPlayerId];
+    }
+
+    public function getBoard()
+    {
+        return $this->board;
+    }
+
+    public function getQuestions()
+    {
+        return $this->questions;
+    }
+
     public function add($playerName)
     {
         $this->players[] = new Player($playerName, $this->board->firstPlace());
         $this->view->displayPlayerIsAdded($playerName, $this->howManyPlayers());
-    }
-
-    private function howManyPlayers()
-    {
-        return count($this->players);
     }
 
     public function roll($rolledNumber)
@@ -53,32 +63,30 @@ class Game
         return $this->passTheDice();
     }
 
+    private function howManyPlayers()
+    {
+        return count($this->players);
+    }
+
     private function passTheDice()
     {
         $nextId = $this->currentPlayerId + 1;
         $this->currentPlayerId = $nextId < $this->howManyPlayers() ? $nextId : 0;
-        return $this->gameIsNotOver();
+        return $this->isContinuing();
     }
 
-    private function gameIsNotOver()
+    private function isContinuing()
     {
-        return !array_reduce($this->players, function ($result, $player) {
-            return $result || $player->getCoins() == self::GOLD_COINS_TO_WIN;
-        }, false);
+        return !$this->isOver();
     }
 
-    public function getCurrentPlayer()
+    private function isOver()
     {
-        return $this->players[$this->currentPlayerId];
+        return count(array_filter($this->players, [$this, 'isPlayerWinner'])) > 0;
     }
 
-    public function getBoard()
+    private function isPlayerWinner(Player $player)
     {
-        return $this->board;
-    }
-
-    public function getQuestions()
-    {
-        return $this->questions;
+        return $player->getCoins() == self::GOLD_COINS_TO_WIN;
     }
 }
