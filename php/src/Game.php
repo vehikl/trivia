@@ -138,7 +138,7 @@ class Game
     private function givePlayerGoldCoin()
     {
         $this->getCurrentPlayer()->addCoin();
-        echoln("{$this->getCurrentPlayer()->getName()} now has {$this->getCurrentPlayer()->getCoins()} Gold Coins.");
+        $this->displayPlayerReceivedGoldCoin();
     }
 
     private function sendPlayerToPenaltyBox()
@@ -165,7 +165,12 @@ class Game
         return $this->players[$this->currentPlayerId];
     }
 
-    public function displayPlayerSentToPenaltyBox()
+    protected function displayPlayerReceivedGoldCoin()
+    {
+        echoln("{$this->getCurrentPlayer()->getName()} now has {$this->getCurrentPlayer()->getCoins()} Gold Coins.");
+    }
+
+    protected function displayPlayerSentToPenaltyBox()
     {
         echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
     }
