@@ -131,8 +131,7 @@ class Game
     public function wrongAnswer()
     {
         echoln("Question was incorrectly answered");
-        echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
-        $this->getCurrentPlayer()->setIsInPenaltyBox(true);
+        $this->sendPlayerToPenaltyBox();
 
         $this->passTheDice();
         return $this->gameIsNotOver();
@@ -142,6 +141,12 @@ class Game
     {
         $this->getCurrentPlayer()->addCoin();
         echoln("{$this->getCurrentPlayer()->getName()} now has {$this->getCurrentPlayer()->getCoins()} Gold Coins.");
+    }
+
+    private function sendPlayerToPenaltyBox()
+    {
+        $this->getCurrentPlayer()->setIsInPenaltyBox(true);
+        echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
     }
 
     protected function isNotAllowedOutOfPenaltyBox($player, $roll)
