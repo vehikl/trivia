@@ -53,9 +53,9 @@ class Player
         return $this->roll;
     }
 
-    public function setIsInPenaltyBox($value)
+    public function receivePenalty()
     {
-        $this->inPenaltyBox = $value;
+        $this->inPenaltyBox = true;
     }
 
     public function isInPenaltyBox()

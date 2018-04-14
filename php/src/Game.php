@@ -145,7 +145,7 @@ class Game
 
     private function sendPlayerToPenaltyBox()
     {
-        $this->getCurrentPlayer()->setIsInPenaltyBox(true);
+        $this->getCurrentPlayer()->receivePenalty();
         echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
     }
 
