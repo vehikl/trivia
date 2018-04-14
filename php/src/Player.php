@@ -14,7 +14,7 @@ class Player
         $this->name = $name;
         $this->place = $place;
         $this->purse = 0;
-        $this->inPenaltyBox = 0;
+        $this->inPenaltyBox = false;
     }
 
     public function getName()
@@ -22,14 +22,14 @@ class Player
         return $this->name;
     }
 
-    public function getCoins()
-    {
-        return $this->purse;
-    }
-
     public function addCoin()
     {
         $this->purse++;
+    }
+
+    public function getCoins()
+    {
+        return $this->purse;
     }
 
     public function moveTo($place)
