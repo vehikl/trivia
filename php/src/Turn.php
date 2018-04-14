@@ -28,22 +28,23 @@ class Turn
     {
         $this->player->setRoll($this->roll);
         $this->view->displayPlayerRolls($this->roll->getValue());
+        $this->player->isInPenaltyBox() ? $this->penaltyAction() : $this->regularAction();
+    }
 
-        if ($this->player->isNotAllowedToMove()) {
+    private function penaltyAction()
+    {
+        if (!$this->isPlayerGettingOutOfPenaltyBox()) {
             return $this->view->displayPlayerStaysInPenaltyBox();
         }
 
-        if ($this->player->isInPenaltyBox()) {
-            $this->view->displayPlayerGetsOutOfPenaltyBox();
-        }
-
-        $this->movePlayer($this->roll->getValue());
-        $this->game->askQuestion();
+        $this->view->displayPlayerGetsOutOfPenaltyBox();
+        $this->regularAction();
     }
 
-    private function isPlayerAllowedToMove()
+    private function regularAction()
     {
-        $this->isNotInPenaltyBox() || $this->roll->isOdd();
+        $this->movePlayer($this->roll->getValue());
+        $this->game->askQuestion();
     }
 
     private function movePlayer($roll)
@@ -51,5 +52,10 @@ class Turn
         $currentSpace = $this->player->getSpace();
         $this->player->setSpace($this->board->findPlaceNumberOfPlacesFromCurrentPlace($currentSpace, $roll));
         $this->view->displayPlayerMoves();
+    }
+
+    private function isPlayerGettingOutOfPenaltyBox()
+    {
+        return $this->roll->isOdd();
     }
 }
