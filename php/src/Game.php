@@ -73,11 +73,6 @@ class Game
         $this->askQuestion();
     }
 
-    protected function isNotAllowedOutOfPenaltyBox($player, $roll)
-    {
-        return $player->getIsInPenaltyBox() && $roll->isEven();
-    }
-
     private function movePlayer($roll)
     {
         $this->getCurrentPlayer()->setSpace($this->getCurrentPlayer()->getSpace() + $roll);
@@ -118,12 +113,14 @@ class Game
 
     public function wasCorrectlyAnswered()
     {
-        if ($this->getCurrentPlayer()->getIsInPenaltyBox() && $this->getCurrentPlayer()->getIsGettingOutOfPenaltyBox()) {
-            echoln("Answer was correct!!!!");
-            return $this->givePlayerGoldCoin();
-        } elseif ($this->getCurrentPlayer()->getIsInPenaltyBox()) {
+        if ($this->isNotAllowedToAnswer($this->getCurrentPlayer())) {
             $this->passTheDice();
             return $this->gameIsNotOver();
+        }
+
+        if ($this->getCurrentPlayer()->getIsInPenaltyBox()) {
+            echoln("Answer was correct!!!!");
+            return $this->givePlayerGoldCoin();
         } else {
             echoln("Answer was corrent!!!!");
             return $this->givePlayerGoldCoin();
@@ -147,6 +144,16 @@ class Game
         $this->passTheDice();
 
         return $this->gameIsNotOver();
+    }
+
+    protected function isNotAllowedToAnswer($player)
+    {
+        return $player->getIsInPenaltyBox() && !$this->getCurrentPlayer()->getIsGettingOutOfPenaltyBox();
+    }
+
+    protected function isNotAllowedOutOfPenaltyBox($player, $roll)
+    {
+        return $player->getIsInPenaltyBox() && $roll->isEven();
     }
 
     private function passTheDice()
