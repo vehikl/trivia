@@ -61,7 +61,7 @@ class Game
         }
 
         if ($player->isInPenaltyBox()) {
-            echoln("{$player->getName()} is getting out of the penalty box");
+            $this->displayPlayerGetsOutOfPenaltyBox();
         }
 
         $this->movePlayer($roll->getValue());
@@ -176,6 +176,11 @@ class Game
     protected function displayPlayerStaysInPenaltyBox()
     {
         echoln("{$this->getCurrentPlayer()->getName()} is not getting out of the penalty box");
+    }
+
+    protected function displayPlayerGetsOutOfPenaltyBox()
+    {
+        echoln("{$this->getCurrentPlayer()->getName()} is getting out of the penalty box");
     }
 
     protected function displayPlayerReceivedGoldCoin()
