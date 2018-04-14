@@ -49,16 +49,8 @@ class Game
 
     public function wrongAnswer()
     {
-        $this->displayWrongAnswer();
-        $this->sendPlayerToPenaltyBox();
-
+        $this->turn->wrongAnswer();
         return $this->passTheDice();
-    }
-
-    private function sendPlayerToPenaltyBox()
-    {
-        $this->getCurrentPlayer()->receivePenalty();
-        $this->displayPlayerIsSentToPenaltyBox();
     }
 
     private function passTheDice()
@@ -94,15 +86,5 @@ class Game
     {
         $this->view->echoln("{$playerName} was added");
         $this->view->echoln("They are player number {$this->howManyPlayers()}");
-    }
-
-    protected function displayWrongAnswer()
-    {
-        $this->view->echoln("Question was incorrectly answered");
-    }
-
-    protected function displayPlayerIsSentToPenaltyBox()
-    {
-        $this->view->echoln("{$this->getCurrentPlayer()->getName()} was sent to the penalty box");
     }
 }

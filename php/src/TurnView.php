@@ -56,4 +56,14 @@ class TurnView
     {
         $this->echoln("{$this->player->getName()} now has {$this->player->getCoins()} Gold Coins.");
     }
+
+    public function displayWrongAnswer()
+    {
+        $this->echoln("Question was incorrectly answered");
+    }
+
+    public function displayPlayerIsSentToPenaltyBox()
+    {
+        $this->echoln("{$this->player->getName()} was sent to the penalty box");
+    }
 }

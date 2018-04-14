@@ -72,6 +72,18 @@ class Turn
         $this->view->displayPlayerReceivesGoldCoin();
     }
 
+    public function wrongAnswer()
+    {
+        $this->view->displayWrongAnswer();
+        $this->sendPlayerToPenaltyBox();
+    }
+
+    private function sendPlayerToPenaltyBox()
+    {
+        $this->player->receivePenalty();
+        $this->view->displayPlayerIsSentToPenaltyBox();
+    }
+
     private function getCategory()
     {
         return $this->getEndPlace()->getCategory();
