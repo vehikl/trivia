@@ -11,9 +11,6 @@ class Turn
 
     private $view;
 
-    const TOTAL_PLACES = 12;
-    const LAST_PLACE = 11;
-
     public function __construct(Game $game, Roll $roll)
     {
         $this->player = $game->getCurrentPlayer();
