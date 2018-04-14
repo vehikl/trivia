@@ -13,9 +13,8 @@ class Game
     private $view;
 
     const CATEGORIES = ["Pop", "Science", "Sports", "Rock"];
-    const QUESTIONS_PER_CATEGORY = 50;
     const NUMBER_OF_PLACES = 12;
-
+    const QUESTIONS_PER_CATEGORY = 50;
     const GOLD_COINS_TO_WIN = 6;
 
     public function __construct()
@@ -50,23 +49,7 @@ class Game
 
     private function currentCategory()
     {
-        $popPlaces = [0, 4, 8];
-        $sciencePlaces = [1, 5, 9];
-        $sportsPlaces = [2, 6, 10];
-
-        if (in_array($this->getCurrentPlayer()->getPlace()->getLocation(), $popPlaces)) {
-            return "Pop";
-        }
-
-        if (in_array($this->getCurrentPlayer()->getPlace()->getLocation(), $sciencePlaces)) {
-            return "Science";
-        }
-
-        if (in_array($this->getCurrentPlayer()->getPlace()->getLocation(), $sportsPlaces)) {
-            return "Sports";
-        }
-
-        return "Rock";
+        return $this->getCurrentPlayer()->getPlace()->getCategory();
     }
 
     public function wasCorrectlyAnswered()
