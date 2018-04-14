@@ -80,7 +80,7 @@ class Game
     {
         $this->displayCategory();
         $category = strtolower($this->currentCategory());
-        echoln(array_shift($this->questions[$category]));
+        $this->displayQuestion(array_shift($this->questions[$category]));
     }
 
     private function currentCategory()
@@ -180,6 +180,11 @@ class Game
     protected function displayCategory()
     {
         echoln("The category is {$this->currentCategory()}");
+    }
+
+    protected function displayQuestion($question)
+    {
+        echoln($question);
     }
 
     protected function displayPlayerIsSentToPenaltyBox()
