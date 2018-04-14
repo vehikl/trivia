@@ -34,6 +34,6 @@ class TurnView
 
     public function displayPlayerMoves()
     {
-        $this->echoln("{$this->player->getName()}'s new location is {$this->player->getPlace()}");
+        $this->echoln("{$this->player->getName()}'s new location is {$this->player->getPlace()->getLocation()}");
     }
 }

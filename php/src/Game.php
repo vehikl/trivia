@@ -27,7 +27,7 @@ class Game
 
     public function add($playerName)
     {
-        $this->players[] = new Player($playerName);
+        $this->players[] = new Player($playerName, $this->board->firstPlace());
         $this->displayPlayerIsAdded($playerName);
     }
 
@@ -54,15 +54,15 @@ class Game
         $sciencePlaces = [1, 5, 9];
         $sportsPlaces = [2, 6, 10];
 
-        if (in_array($this->getCurrentPlayer()->getPlace(), $popPlaces)) {
+        if (in_array($this->getCurrentPlayer()->getPlace()->getLocation(), $popPlaces)) {
             return "Pop";
         }
 
-        if (in_array($this->getCurrentPlayer()->getPlace(), $sciencePlaces)) {
+        if (in_array($this->getCurrentPlayer()->getPlace()->getLocation(), $sciencePlaces)) {
             return "Science";
         }
 
-        if (in_array($this->getCurrentPlayer()->getPlace(), $sportsPlaces)) {
+        if (in_array($this->getCurrentPlayer()->getPlace()->getLocation(), $sportsPlaces)) {
             return "Sports";
         }
 

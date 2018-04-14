@@ -5,16 +5,16 @@ namespace App;
 class Player
 {
     private $name;
-    private $placeId;
+    private $place;
     private $purse;
     private $roll;
     private $inPenaltyBox;
     private $isGettingOutOfPenaltyBox;
 
-    public function __construct($name)
+    public function __construct($name, Place $place)
     {
         $this->name = $name;
-        $this->placeId = 0;
+        $this->place = $place;
         $this->purse = 0;
         $this->roll = 0;
         $this->inPenaltyBox = 0;
@@ -35,14 +35,14 @@ class Player
         $this->purse++;
     }
 
-    public function moveTo($placeId)
+    public function moveTo($place)
     {
-        $this->placeId = $placeId;
+        $this->place = $place;
     }
 
     public function getPlace()
     {
-        return $this->placeId;
+        return $this->place;
     }
 
     public function setRoll($value)

@@ -14,16 +14,22 @@ class GameBoard
         }
     }
 
-    public function getPlace($placeId)
+    public function findPlace($location)
     {
-        return $this->places[$placeId];
+        return $this->places[$location];
     }
 
-    public function findPlaceNumberOfPlacesFromCurrentPlace($currentPlace, $numberOfPlaces)
+    public function firstPlace()
     {
-        $place = $currentPlace + $numberOfPlaces;
+        return $this->findPlace(0);
+    }
 
-        return $this->placeLoops($place) ? $place - $this->getTotalNumberOfPlaces() : $place;
+    public function findPlaceNumberOfPlacesFromCurrentPlace(Place $currentPlace, $numberOfPlacesToMove)
+    {
+        $location = $currentPlace->getLocation() + $numberOfPlacesToMove;
+        $location = $this->placeLoops($location) ? $location - $this->getTotalNumberOfPlaces() : $location;
+
+        return $this->findPlace($location);
     }
 
     private function placeLoops($place)

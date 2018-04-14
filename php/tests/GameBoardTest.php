@@ -1,6 +1,7 @@
 <?php
 
 use App\GameBoard;
+use App\Place;
 use PHPUnit\Framework\TestCase;
 
 class GameBoardTest extends TestCase
@@ -14,22 +15,22 @@ class GameBoardTest extends TestCase
 
     public function testGameBoardInstantiates()
     {
-        $this->assertEquals($this->board->getPlace(2)->getCategory(), "Taco");
+        $this->assertEquals($this->board->findPlace(2)->getCategory(), "Taco");
     }
 
     public function testMovingSomeNumberOfPlaces()
     {
-        $currentPlace = 1;
+        $currentPlace = new Place(1, "Taco");
         $numberOfPlaces = 2;
         $newPlace = $this->board->findPlaceNumberOfPlacesFromCurrentPlace($currentPlace, $numberOfPlaces);
-        $this->assertEquals(3, $newPlace);
+        $this->assertEquals(3, $newPlace->getLocation());
     }
 
     public function testMovingSomeNumberOfPlacesThatLoops()
     {
-        $currentPlace = 11;
+        $currentPlace = new Place(11, "Taco");
         $numberOfPlaces = 4;
         $newPlace = $this->board->findPlaceNumberOfPlacesFromCurrentPlace($currentPlace, $numberOfPlaces);
-        $this->assertEquals(3, $newPlace);
+        $this->assertEquals(3, $newPlace->getLocation());
     }
 }
