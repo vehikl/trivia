@@ -30,20 +30,26 @@ class Turn
         $this->player->isInPenaltyBox() ? $this->penaltyAction() : $this->regularAction();
     }
 
-    private function penaltyAction()
-    {
-        if (!$this->isPlayerGettingOutOfPenaltyBox()) {
-            return $this->view->displayPlayerStaysInPenaltyBox();
-        }
-
-        $this->view->displayPlayerGetsOutOfPenaltyBox();
-        $this->regularAction();
-    }
-
     private function regularAction()
     {
         $this->movePlayer();
         $this->askQuestion();
+    }
+
+    private function penaltyAction()
+    {
+        $this->isPenaltyLifted() ? $this->penaltyLiftedAction() : $this->penaltyStaysAction();
+    }
+
+    private function penaltyLiftedAction()
+    {
+        $this->view->displayPlayerGetsOutOfPenaltyBox();
+        $this->regularAction();
+    }
+
+    private function penaltyStaysAction()
+    {
+        $this->view->displayPlayerStaysInPenaltyBox();
     }
 
     private function movePlayer()
@@ -98,10 +104,10 @@ class Turn
 
     private function isPlayerAllowedToAnswer()
     {
-        return !$this->player->isInPenaltyBox() || $this->isPlayerGettingOutOfPenaltyBox();
+        return !$this->player->isInPenaltyBox() || $this->isPenaltyLifted();
     }
 
-    private function isPlayerGettingOutOfPenaltyBox()
+    private function isPenaltyLifted()
     {
         return $this->roll->isOdd();
     }
