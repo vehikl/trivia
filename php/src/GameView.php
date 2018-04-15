@@ -2,7 +2,7 @@
 
 namespace App;
 
-class GameView extends View
+class GameView extends View implements ViewInterface
 {
     private $player;
 
