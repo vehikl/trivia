@@ -4,24 +4,24 @@ namespace App;
 
 class Turn
 {
+    private $startPlace;
+    private $roll;
+    private $player;
     private $board;
     private $questions;
-    private $player;
-    private $roll;
-    private $startPlace;
 
     private $view;
 
-    public function __construct(Game $game, Roll $roll, $view)
+    public function __construct($player, $roll, $board, $questions, $view)
     {
-        $this->board = $game->getBoard();
-        $this->questions = $game->getQuestions();
-        $this->player = $game->getCurrentPlayer();
+        $this->startPlace = $player->getPlace();
         $this->roll = $roll;
-        $this->startPlace = $this->player->getPlace();
+        $this->player = $player;
+        $this->board = $board;
+        $this->questions = $questions;
 
         $this->view = $view;
-        $this->view->setPlayer($this->player);
+        $this->view->setPlayer($player);
     }
 
     public function action()

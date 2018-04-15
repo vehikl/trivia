@@ -47,7 +47,9 @@ class Game
 
     public function roll($rolledNumber)
     {
-        $this->turn = new Turn($this, new Roll($rolledNumber), $this->view);
+        $player = $this->getCurrentPlayer();
+        $roll = new Roll($rolledNumber);
+        $this->turn = new Turn($player, $roll, $this->board, $this->questions, $this->view);
         $this->turn->action();
     }
 
