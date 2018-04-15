@@ -66,10 +66,11 @@ class Turn
 
     public function correctAnswer()
     {
-        if (!$this->isPlayerAllowedToAnswer()) {
-            return;
-        }
+        $this->isPlayerAllowedToAnswer() && $this->correctAnswerWithPermission();
+    }
 
+    private function correctAnswerWithPermission()
+    {
         $this->view->displayCorrectAnswer($this->useCorrent());
         $this->givePlayerGoldCoin();
     }
