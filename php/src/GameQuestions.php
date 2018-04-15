@@ -6,11 +6,19 @@ class GameQuestions
 {
     private $questions;
 
-    public function __construct($categories, $questionsPerCategory)
+    public function __construct($categories)
     {
-        $this->questions = array_combine($categories, array_map(function ($name) use ($questionsPerCategory) {
-            return new CategoryQuestions($name, $questionsPerCategory);
-        }, $categories));
+        $this->questions = $this->generateCategoriesQuestions($categories);
+    }
+
+    private function generateCategoriesQuestions($categories)
+    {
+        return array_combine($categories, array_map([$this, 'createCategoryQuestionsFor'], $categories));
+    }
+
+    private function createCategoryQuestionsFor($category)
+    {
+        return new CategoryQuestions($category);
     }
 
     public function askFrom($category)

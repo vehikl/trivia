@@ -7,7 +7,7 @@ class CategoryQuestions
     private $name;
     private $index = -1;
 
-    public function __construct($name, $numberOfQuestions)
+    public function __construct($name)
     {
         $this->name = $name;
     }

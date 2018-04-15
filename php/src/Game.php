@@ -14,13 +14,12 @@ class Game
 
     const CATEGORIES = ["Pop", "Science", "Sports", "Rock"];
     const NUMBER_OF_PLACES = 12;
-    const QUESTIONS_PER_CATEGORY = 50;
     const GOLD_COINS_TO_WIN = 6;
 
     public function __construct($view)
     {
         $this->board = new GameBoard(self::CATEGORIES, self::NUMBER_OF_PLACES);
-        $this->questions = new GameQuestions(self::CATEGORIES, self::QUESTIONS_PER_CATEGORY);
+        $this->questions = new GameQuestions(self::CATEGORIES);
         $this->view = $view;
     }
 
