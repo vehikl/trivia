@@ -24,10 +24,10 @@ class GameTest extends TestCase
 
     public function seedProvider()
     {
-        return array_map([$this, 'seedToArray'], range(1, 1000));
+        return collect(range(1, 1000))->map([$this, 'seedToArray']);
     }
 
-    private function seedToArray($seed)
+    public function seedToArray($seed)
     {
         return [$seed];
     }
