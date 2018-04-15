@@ -5,13 +5,24 @@ namespace App;
 class GameBoard
 {
     private $places;
+    private $categories;
 
     public function __construct($categories, $numberOfPlaces)
     {
-        for ($i = 0; $i < $numberOfPlaces; $i++) {
-            $categoryId = $i % count($categories);
-            $this->places[] = new Place($i, $categories[$categoryId]);
-        }
+        $this->categories = $categories;
+        $this->places = $this->generatePlaces($numberOfPlaces);
+    }
+
+    private function generatePlaces($numberOfPlaces)
+    {
+        $locations = range(0, $numberOfPlaces - 1);
+        return array_map([$this, 'createPlaceAt'], $locations);
+    }
+
+    private function createPlaceAt($location)
+    {
+        $categoryId = $location % count($this->categories);
+        return new Place($location, $this->categories[$categoryId]);
     }
 
     public function findPlace($location)
@@ -28,7 +39,6 @@ class GameBoard
     {
         $location = $currentPlace->getLocation() + $numberOfPlacesToMove;
         $location = $this->placeLoops($location) ? $location - $this->getTotalNumberOfPlaces() : $location;
-
         return $this->findPlace($location);
     }
 
