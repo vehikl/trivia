@@ -2,7 +2,7 @@
 
 namespace App;
 
-class GameView extends View implements ViewInterface
+class CommandLineView implements ViewInterface
 {
     private $player;
 
@@ -66,5 +66,10 @@ class GameView extends View implements ViewInterface
     public function displayPlayerIsSentToPenaltyBox()
     {
         $this->echoln("{$this->player->getName()} was sent to the penalty box");
+    }
+
+    public function echoln($string)
+    {
+        echo $string . "\n";
     }
 }

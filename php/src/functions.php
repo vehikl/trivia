@@ -1,7 +1,7 @@
 <?php
 
+use App\CommandLineView;
 use App\Game;
-use App\GameView;
 
 function playGame($seed, $outputFile)
 {
@@ -13,7 +13,7 @@ function playGame($seed, $outputFile)
 
     $notAWinner;
 
-    $view = new GameView();
+    $view = new CommandLineView();
     $aGame = new Game($view);
 
     $aGame->add("Chet");
