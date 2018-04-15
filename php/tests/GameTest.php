@@ -19,13 +19,16 @@ class GameTest extends TestCase
 
     protected function assertMatchesSeededOutput($seed, $actualOutput)
     {
-        $this->assertStringEqualsFile(__DIR__.'/fixtures/output-seeded-with-'.$seed.'.txt', $actualOutput);
+        $this->assertStringEqualsFile(__DIR__ . '/fixtures/output-seeded-with-' . $seed . '.txt', $actualOutput);
     }
 
     public function seedProvider()
     {
-        return array_map(function ($seed) {
-            return [$seed];
-        }, range(201, 300));
+        return array_map([$this, 'seedToArray'], range(1, 1000));
+    }
+
+    private function seedToArray($seed)
+    {
+        return [$seed];
     }
 }
