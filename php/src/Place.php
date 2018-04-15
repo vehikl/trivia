@@ -4,18 +4,18 @@ namespace App;
 
 class Place
 {
-    private $location;
+    private $position;
     private $category;
 
-    public function __construct($location, $category)
+    public function __construct($position, $category)
     {
-        $this->location = $location;
+        $this->position = $position;
         $this->category = $category;
     }
 
-    public function getLocation()
+    public function getPosition()
     {
-        return $this->location;
+        return $this->position;
     }
 
     public function getCategory()

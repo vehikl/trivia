@@ -100,7 +100,7 @@ class Turn
 
     private function getEndPlace()
     {
-        return $this->board->findPlaceNumberOfPlacesFrom($this->startPlace, $this->roll->getValue());
+        return $this->board->findPlace($this->startPlace->getPosition() + $this->roll->getValue());
     }
 
     private function isPlayerAllowedToAnswer()

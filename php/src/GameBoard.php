@@ -15,40 +15,24 @@ class GameBoard
 
     private function generatePlaces($numberOfPlaces)
     {
-        $locations = range(0, $numberOfPlaces - 1);
-        return array_map([$this, 'createPlaceAt'], $locations);
+        $positions = range(0, $numberOfPlaces - 1);
+        return array_map([$this, 'createPlaceAt'], $positions);
     }
 
-    private function createPlaceAt($location)
+    private function createPlaceAt($position)
     {
-        $categoryId = $location % count($this->categories);
-        return new Place($location, $this->categories[$categoryId]);
+        $categoryId = $position % count($this->categories);
+        return new Place($position, $this->categories[$categoryId]);
     }
 
-    public function findPlace($location)
+    public function findPlace($position)
     {
-        return $this->places[$location];
+        $position = $position % count($this->places) ?? $position;
+        return $this->places[$position];
     }
 
     public function firstPlace()
     {
         return $this->findPlace(0);
-    }
-
-    public function findPlaceNumberOfPlacesFrom(Place $currentPlace, $numberOfPlacesToMove)
-    {
-        $location = $currentPlace->getLocation() + $numberOfPlacesToMove;
-        $location = $this->placeLoops($location) ? $location - $this->getTotalNumberOfPlaces() : $location;
-        return $this->findPlace($location);
-    }
-
-    private function placeLoops($place)
-    {
-        return $place >= $this->getTotalNumberOfPlaces();
-    }
-
-    private function getTotalNumberOfPlaces()
-    {
-        return count($this->places);
     }
 }
