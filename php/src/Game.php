@@ -16,7 +16,7 @@ class Game
     const NUMBER_OF_PLACES = 12;
     const GOLD_COINS_TO_WIN = 6;
 
-    public function __construct($view)
+    public function __construct(ViewInterface $view)
     {
         $this->board = new GameBoard(self::CATEGORIES, self::NUMBER_OF_PLACES);
         $this->questions = new GameQuestions(self::CATEGORIES);
@@ -26,16 +26,6 @@ class Game
     public function getCurrentPlayer()
     {
         return $this->players[$this->currentPlayerId];
-    }
-
-    public function getBoard()
-    {
-        return $this->board;
-    }
-
-    public function getQuestions()
-    {
-        return $this->questions;
     }
 
     public function add($playerName)
