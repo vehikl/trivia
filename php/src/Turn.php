@@ -12,7 +12,7 @@ class Turn
 
     private $view;
 
-    public function __construct(Game $game, Roll $roll)
+    public function __construct(Game $game, Roll $roll, $view)
     {
         $this->board = $game->getBoard();
         $this->questions = $game->getQuestions();
@@ -20,7 +20,8 @@ class Turn
         $this->roll = $roll;
         $this->startPlace = $this->player->getPlace();
 
-        $this->view = new TurnView($this->player);
+        $this->view = $view;
+        $this->view->setPlayer($this->player);
     }
 
     public function action()

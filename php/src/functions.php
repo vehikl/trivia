@@ -1,6 +1,7 @@
 <?php
 
 use App\Game;
+use App\GameView;
 
 function playGame($seed, $outputFile)
 {
@@ -12,7 +13,8 @@ function playGame($seed, $outputFile)
 
     $notAWinner;
 
-    $aGame = new Game();
+    $view = new GameView();
+    $aGame = new Game($view);
 
     $aGame->add("Chet");
     $aGame->add("Pat");

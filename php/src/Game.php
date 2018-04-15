@@ -17,11 +17,11 @@ class Game
     const QUESTIONS_PER_CATEGORY = 50;
     const GOLD_COINS_TO_WIN = 6;
 
-    public function __construct()
+    public function __construct($view)
     {
         $this->board = new GameBoard(self::CATEGORIES, self::NUMBER_OF_PLACES);
         $this->questions = new GameQuestions(self::CATEGORIES, self::QUESTIONS_PER_CATEGORY);
-        $this->view = new GameView();
+        $this->view = $view;
     }
 
     public function getCurrentPlayer()
@@ -47,7 +47,7 @@ class Game
 
     public function roll($rolledNumber)
     {
-        $this->turn = new Turn($this, new Roll($rolledNumber));
+        $this->turn = new Turn($this, new Roll($rolledNumber), $this->view);
         $this->turn->action();
     }
 
