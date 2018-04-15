@@ -4,22 +4,16 @@ namespace App;
 
 class CategoryQuestions
 {
-    private $questions = [];
+    private $name;
+    private $index = -1;
 
     public function __construct($name, $numberOfQuestions)
     {
-        for ($i = 0; $i < $numberOfQuestions; $i++) {
-            $this->questions[] = $this->generateQuestion($name, $i);
-        }
-    }
-
-    private function generateQuestion($category, $number)
-    {
-        return "{$category} Question {$number}";
+        $this->name = $name;
     }
 
     public function ask()
     {
-        return array_shift($this->questions);
+        return "{$this->name} Question " . ++$this->index;
     }
 }
