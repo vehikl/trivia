@@ -27,7 +27,7 @@ class GameBoard
 
     public function findPlace($position)
     {
-        $position = $position % count($this->places) ?? $position;
+        $position = $position % count($this->places);
         return $this->places[$position];
     }
 

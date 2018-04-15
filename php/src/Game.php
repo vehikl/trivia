@@ -71,8 +71,7 @@ class Game
 
     private function passTheDice()
     {
-        $nextId = $this->currentPlayerId + 1;
-        $this->currentPlayerId = $nextId < $this->howManyPlayers() ? $nextId : 0;
+        $this->currentPlayerId = ($this->currentPlayerId + 1) % $this->howManyPlayers();
         return $this->isContinuing();
     }
 
