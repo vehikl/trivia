@@ -17,5 +17,7 @@
             "src/functions.php"
         ]
     },
-    "require": {}
+    "require": {
+        "illuminate/support": "^5.6"
+    }
 }
